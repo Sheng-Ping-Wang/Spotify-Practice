@@ -3,27 +3,46 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		465E98E726551A9900610538 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E98E626551A9900610538 /* AppDelegate.swift */; };
 		465E98E926551A9900610538 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E98E826551A9900610538 /* SceneDelegate.swift */; };
-		465E98EB26551A9900610538 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E98EA26551A9900610538 /* ViewController.swift */; };
-		465E98EE26551A9900610538 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 465E98EC26551A9900610538 /* Main.storyboard */; };
+		465E98EB26551A9900610538 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E98EA26551A9900610538 /* HomeViewController.swift */; };
 		465E98F026551A9C00610538 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 465E98EF26551A9C00610538 /* Assets.xcassets */; };
 		465E98F326551A9C00610538 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 465E98F126551A9C00610538 /* LaunchScreen.storyboard */; };
+		465E990326551F0900610538 /* MyTabberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E990226551F0900610538 /* MyTabberViewController.swift */; };
+		465E990926551F2C00610538 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E990826551F2C00610538 /* SearchViewController.swift */; };
+		465E990D26551F4200610538 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E990C26551F4200610538 /* LibraryViewController.swift */; };
+		465E991426551FBD00610538 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E991326551FBD00610538 /* AuthViewController.swift */; };
+		465E991826551FC800610538 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E991726551FC800610538 /* WelcomeViewController.swift */; };
+		465E991B2655201300610538 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E991A2655201300610538 /* AuthManager.swift */; };
+		465E991E2655201D00610538 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E991D2655201D00610538 /* APICaller.swift */; };
+		465E992426552B4900610538 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 465E992326552B4900610538 /* SnapKit */; };
+		465E99272656067300610538 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99262656067300610538 /* AuthResponse.swift */; };
+		465E992A26561EBE00610538 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E992926561EBE00610538 /* UserProfile.swift */; };
+		465E992D265623E500610538 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E992C265623E500610538 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		465E98E326551A9900610538 /* Spotify-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		465E98E626551A9900610538 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		465E98E826551A9900610538 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		465E98EA26551A9900610538 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		465E98ED26551A9900610538 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		465E98EA26551A9900610538 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		465E98EF26551A9C00610538 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		465E98F226551A9C00610538 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		465E98F426551A9C00610538 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		465E990226551F0900610538 /* MyTabberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabberViewController.swift; sourceTree = "<group>"; };
+		465E990826551F2C00610538 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		465E990C26551F4200610538 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		465E991326551FBD00610538 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		465E991726551FC800610538 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		465E991A2655201300610538 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		465E991D2655201D00610538 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		465E99262656067300610538 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
+		465E992926561EBE00610538 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		465E992C265623E500610538 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465E992426552B4900610538 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,13 +78,86 @@
 			children = (
 				465E98E626551A9900610538 /* AppDelegate.swift */,
 				465E98E826551A9900610538 /* SceneDelegate.swift */,
-				465E98EA26551A9900610538 /* ViewController.swift */,
-				465E98EC26551A9900610538 /* Main.storyboard */,
+				465E990126551E3F00610538 /* Managers */,
+				465E990026551E3000610538 /* ViewModels */,
+				465E98FF26551E2800610538 /* Resources */,
+				465E98FD26551DEF00610538 /* Models */,
+				465E98FC26551DE400610538 /* Views */,
+				465E98FE26551DF300610538 /* Controllers */,
 				465E98EF26551A9C00610538 /* Assets.xcassets */,
 				465E98F126551A9C00610538 /* LaunchScreen.storyboard */,
 				465E98F426551A9C00610538 /* Info.plist */,
 			);
 			path = "Spotify-Demo";
+			sourceTree = "<group>";
+		};
+		465E98FC26551DE400610538 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		465E98FD26551DEF00610538 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				465E99262656067300610538 /* AuthResponse.swift */,
+				465E992926561EBE00610538 /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		465E98FE26551DF300610538 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				465E991226551FA800610538 /* Auth */,
+				465E991026551F5100610538 /* CoreViewControllers */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		465E98FF26551E2800610538 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		465E990026551E3000610538 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		465E990126551E3F00610538 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				465E991A2655201300610538 /* AuthManager.swift */,
+				465E991D2655201D00610538 /* APICaller.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		465E991026551F5100610538 /* CoreViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				465E990226551F0900610538 /* MyTabberViewController.swift */,
+				465E98EA26551A9900610538 /* HomeViewController.swift */,
+				465E990826551F2C00610538 /* SearchViewController.swift */,
+				465E990C26551F4200610538 /* LibraryViewController.swift */,
+				465E992C265623E500610538 /* ProfileViewController.swift */,
+			);
+			path = CoreViewControllers;
+			sourceTree = "<group>";
+		};
+		465E991226551FA800610538 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				465E991326551FBD00610538 /* AuthViewController.swift */,
+				465E991726551FC800610538 /* WelcomeViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +176,9 @@
 			dependencies = (
 			);
 			name = "Spotify-Demo";
+			packageProductDependencies = (
+				465E992326552B4900610538 /* SnapKit */,
+			);
 			productName = "Spotify-Demo";
 			productReference = 465E98E326551A9900610538 /* Spotify-Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +206,9 @@
 				Base,
 			);
 			mainGroup = 465E98DA26551A9900610538;
+			packageReferences = (
+				465E992226552B4900610538 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 465E98E426551A9900610538 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,7 +225,6 @@
 			files = (
 				465E98F326551A9C00610538 /* LaunchScreen.storyboard in Resources */,
 				465E98F026551A9C00610538 /* Assets.xcassets in Resources */,
-				465E98EE26551A9900610538 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +235,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				465E98EB26551A9900610538 /* ViewController.swift in Sources */,
+				465E990926551F2C00610538 /* SearchViewController.swift in Sources */,
+				465E991B2655201300610538 /* AuthManager.swift in Sources */,
+				465E991826551FC800610538 /* WelcomeViewController.swift in Sources */,
+				465E991E2655201D00610538 /* APICaller.swift in Sources */,
+				465E990326551F0900610538 /* MyTabberViewController.swift in Sources */,
+				465E98EB26551A9900610538 /* HomeViewController.swift in Sources */,
+				465E991426551FBD00610538 /* AuthViewController.swift in Sources */,
 				465E98E726551A9900610538 /* AppDelegate.swift in Sources */,
+				465E992A26561EBE00610538 /* UserProfile.swift in Sources */,
+				465E99272656067300610538 /* AuthResponse.swift in Sources */,
+				465E992D265623E500610538 /* ProfileViewController.swift in Sources */,
+				465E990D26551F4200610538 /* LibraryViewController.swift in Sources */,
 				465E98E926551A9900610538 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,14 +254,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		465E98EC26551A9900610538 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				465E98ED26551A9900610538 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		465E98F126551A9C00610538 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -341,6 +441,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		465E992226552B4900610538 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		465E992326552B4900610538 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 465E992226552B4900610538 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 465E98DB26551A9900610538 /* Project object */;
 }
