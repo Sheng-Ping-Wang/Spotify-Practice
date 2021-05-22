@@ -9,9 +9,16 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    //MARK: - Properties
+    
+    let profileView = ProfileView()
+    
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view = profileView
+        
         APICaller.shared.getCurrentUserProfile { (result) in
             switch result {
             case .success(let model):
@@ -21,5 +28,9 @@ class ProfileViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: - Functions
+    
+    
     
 }

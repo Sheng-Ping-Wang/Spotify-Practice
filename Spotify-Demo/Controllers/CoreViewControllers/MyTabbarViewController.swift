@@ -7,8 +7,8 @@
 
 import UIKit
 
-class MyTabberViewController: UITabBarController {
-
+class MyTabbarViewController: UITabBarController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,8 +42,17 @@ class MyTabberViewController: UITabBarController {
         nav3.navigationBar.prefersLargeTitles = true
         nav4.navigationBar.prefersLargeTitles = true
         
+        nav1.navigationBar.barTintColor = UIColor(red: 0.15, green: 0.20, blue: 0.13, alpha: 1)
         
-        
+        guard let font = UIFont(name: "Kefa", size: 40) else { return }
+        nav1.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
+        nav2.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
+        nav3.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
+        nav4.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]
+                
+        self.tabBar.barTintColor = .clear
+        self.tabBar.isTranslucent = true
+        self.tabBar.tintColor = .white
         setViewControllers([nav1, nav2, nav3, nav4], animated: false)
         
     }

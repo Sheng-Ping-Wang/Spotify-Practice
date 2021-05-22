@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
         
         if AuthManager.shared.isSignedIn {
-            self.window?.rootViewController = MyTabberViewController()
+            self.window?.rootViewController = MyTabbarViewController()
         }else{
             let nav = UINavigationController(rootViewController: WelcomeViewController())
             nav.viewControllers.first?.title = "Spotify"

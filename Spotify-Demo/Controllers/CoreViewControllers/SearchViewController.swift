@@ -9,11 +9,32 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    //MARK: - Properties
+    
+    let searchView = SearchView()
+    
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = searchView
 
-        view.backgroundColor = .systemBackground
+//        searchSongs()
     }
+    
+    //MARK: - Functions
+    
+    func searchSongs() {
+        APICaller.shared.searchSong { result in
+            switch result {
+            case .success(let song):
+                print("zzzzzzz\(song)")
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+    }
+    
 
 
 }
