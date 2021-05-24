@@ -9,27 +9,34 @@ import UIKit
 
 class GetImageView: UIImageView {
     
+    static var cache = NSCache<AnyObject, UIImage>()
     var url: URL?
     
     func getImages(url: URL) {
         
         self.url = url
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print("Error: \(error)")
-            }else if let data = data {
+        if let cachedImage = GetImageView.cache.object(forKey: self.url as AnyObject) {
+            self.image = cachedImage
+//            print("You get image from cache")
+        }else{
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    print("Error: \(String(describing: error))")
+                    return
+                }
                 DispatchQueue.main.async {
-                    // 判斷式
                     if url == self.url {
                         let cachedImage = UIImage(data: data)
                         self.image = cachedImage
-                    }else{
-//                        print("1234")
+                        GetImageView.cache.setObject(cachedImage!, forKey: url as AnyObject)
+//                        print("You get image from \(url)")
                     }
                 }
-            }
-        }.resume()
+            }.resume()
+        }
+        
+        
         
         
 //        APICaller.shared.creatRequest(with: URL(string: url), type: .GET) { songRequest in

@@ -42,7 +42,10 @@ class MyTabbarViewController: UITabBarController {
         nav3.navigationBar.prefersLargeTitles = true
         nav4.navigationBar.prefersLargeTitles = true
         
-        nav1.navigationBar.barTintColor = UIColor(red: 0.15, green: 0.20, blue: 0.13, alpha: 1)
+        nav1.navigationBar.barTintColor = UIColor.defaultColor()
+        nav2.navigationBar.barTintColor = UIColor.defaultColor()
+        nav3.navigationBar.barTintColor = UIColor.defaultColor()
+        nav4.navigationBar.barTintColor = UIColor.defaultColor()
         
         guard let font = UIFont(name: "Kefa", size: 40) else { return }
         nav1.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]

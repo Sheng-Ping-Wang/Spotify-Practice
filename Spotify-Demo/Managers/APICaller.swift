@@ -58,8 +58,8 @@ class APICaller {
     
     
     //MARK: Search Song API
-    func searchSong(completion: @escaping (Result<SearchSongs, Error>) -> Void) {
-        creatRequest(with: URL(string: Constants.baseAPIURL + "/search?q=dance%20monkey&type=track"), type: .GET) { songRequest in
+    func searchSong(text: String, completion: @escaping (Result<SearchResult, Error>) -> Void) {
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/search?q=\(text)&type=track%2Cartist"), type: .GET) { songRequest in
             let task = URLSession.shared.dataTask(with: songRequest) { (data, response, error) in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
@@ -67,7 +67,7 @@ class APICaller {
                 }
                 do{
                     let decoder = JSONDecoder()
-                    let song = try decoder.decode(SearchSongs.self, from: data)
+                    let song = try decoder.decode(SearchResult.self, from: data)
                     completion(.success(song))
 //                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
 //                    print("let's seeeeeeeee\(result)")
@@ -81,26 +81,24 @@ class APICaller {
     
     //MARK: Get Category API
     
-//    func getCategories(completion: @escaping (Result<Brouse, Error>) -> Void) {
-//        creatRequest(with: URL(string: Constants.baseAPIURL + "/browse/categories"), type: .GET) { songRequest in
-//            let task = URLSession.shared.dataTask(with: songRequest) { (data, response, error) in
-//                guard let data = data, error == nil else {
-//                    completion(.failure(APIError.failedToGetData))
-//                    return
-//                }
-//                do{
-//                    let decoder = JSONDecoder()
-//                    let test = try decoder.decode(Brouse.self, from: data)
-//                    completion(.success(test))
-////                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-////                    print("let's seeeeeeeee\(result)")
-//                }catch{
-//                    completion(.failure(error))
-//                }
-//            }
-//            task.resume()
-//        }
-//    }
+    func getCategories(completion: @escaping (Result<Brouse, Error>) -> Void) {
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/browse/categories?country=TW"), type: .GET) { songRequest in
+            let task = URLSession.shared.dataTask(with: songRequest) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let test = try decoder.decode(Brouse.self, from: data)
+                    completion(.success(test))
+                }catch{
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
     
     func getRankAPI(completion: @escaping (Result<RankPlaylist, Error>) -> Void) {
         
@@ -126,8 +124,8 @@ class APICaller {
     
     func getArtistsList(completion: @escaping (Result<ArtistsList, Error>) -> Void) {
         
-        creatRequest(with: URL(string: Constants.baseAPIURL + "/artists/6eUKZXaKkcviH0Ku9w2n3V/related-artists"), type: .GET) { Request in
-            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/artists/6eUKZXaKkcviH0Ku9w2n3V/related-artists"), type: .GET) { ArtistsListRequest in
+            let task = URLSession.shared.dataTask(with: ArtistsListRequest) { (data, response, error) in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
                     return
@@ -136,6 +134,69 @@ class APICaller {
                     let decoder = JSONDecoder()
                     let list = try decoder.decode(ArtistsList.self, from: data)
 //                    print(test)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func getRecentlyPlayed(completion: @escaping (Result<RecentlyPlayed, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/me/player/recently-played"), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(RecentlyPlayed.self, from: data)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func getNewReleases(completion: @escaping (Result<NewReleases, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?country=TW"), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(NewReleases.self, from: data)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func getCurrentlylyFollowing(completion: @escaping (Result<CurrentlyFollowing, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/me/following?type=artist"), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(CurrentlyFollowing.self, from: data)
                     completion(.success(list))
                 }catch{
                     print(error)

@@ -18,7 +18,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     var myImageView: GetImageView = {
         var image = GetImageView()
-//        image.backgroundColor = .systemBlue
+        image.layer.cornerRadius = 20
+        image.clipsToBounds = true
         return image
     }()
     

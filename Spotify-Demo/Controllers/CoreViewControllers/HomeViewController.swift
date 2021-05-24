@@ -13,8 +13,16 @@ class HomeViewController: UIViewController {
     
     let homeView = HomeView()
     
-    var homeSections: [HomeSections] = [.catrgories, .artists, .somethingElse]
+    var homeSections: [HomeSections] = [.newReleases, .followSingers, .catrgories, .artists, .recentlyPlayed]
     
+//    var homePageModel: HomePageModel? {
+//        didSet{
+//            DispatchQueue.main.async {
+//                self.homeView.homeTableView.reloadData()
+//            }
+//        }
+//    }
+
     var musicCategory: RankPlaylist? {
         didSet{
             DispatchQueue.main.async {
@@ -22,8 +30,38 @@ class HomeViewController: UIViewController {
             }
         }
     }
+
+    var relatedArtists: ArtistsList? {
+        didSet{
+            DispatchQueue.main.async {
+                self.homeView.homeTableView.reloadData()
+            }
+        }
+    }
     
-    var relatedArtists: ArtistsList?
+    var newReleases: NewReleases? {
+        didSet{
+            DispatchQueue.main.async {
+                self.homeView.homeTableView.reloadData()
+            }
+        }
+    }
+    
+    var recentlyPlayed: RecentlyPlayed? {
+        didSet{
+            DispatchQueue.main.async {
+                self.homeView.homeTableView.reloadData()
+            }
+        }
+    }
+    
+    var currentlyFollowing: CurrentlyFollowing? {
+        didSet{
+            DispatchQueue.main.async {
+                self.homeView.homeTableView.reloadData()
+            }
+        }
+    }
     
     
     
@@ -48,7 +86,7 @@ class HomeViewController: UIViewController {
             case .success(let category):
                 self.musicCategory = category
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error)
             }
         }
         
@@ -57,9 +95,37 @@ class HomeViewController: UIViewController {
             case .success(let list):
                 self.relatedArtists = list
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error)
             }
         }
+        
+        APICaller.shared.getRecentlyPlayed { result in
+            switch result {
+            case .success(let list):
+                self.recentlyPlayed = list
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        APICaller.shared.getNewReleases { result in
+            switch result {
+            case .success(let list):
+                self.newReleases = list
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        APICaller.shared.getCurrentlylyFollowing { result in
+            switch result {
+            case .success(let list):
+                self.currentlyFollowing = list
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
     }
     
     
@@ -83,35 +149,52 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as? HomeTableViewCell else { return UITableViewCell() }
 
         switch homeSections[indexPath.section] {
+        case .newReleases:
+            if let newReleases = self.newReleases?.albums.items.map({$0.images[0].url}) {
+            cell.getPictures = newReleases
+            }
+            return cell
+        
+        case .followSingers:
+            if let currentlyFollowing = self.currentlyFollowing?.artists.items.map({$0.images[0].url}) {
+                cell.getPictures = currentlyFollowing
+                cell.isCircle = true
+            }
+            return cell
+            
         case .catrgories:
             if let categories = self.musicCategory?.playlists.items.map({$0.images[0].url}) {
-            cell.testArray = categories
+            cell.getPictures = categories
             }
             return cell
             
         case .artists:
             if let playlist = self.relatedArtists?.artists.map({$0.images[0].url}){
-                cell.testArray = playlist
+                cell.getPictures = playlist
             }
             return cell
             
-        case .somethingElse:
-            break
+        case .recentlyPlayed:
+            if let recentlyPlayed = self.recentlyPlayed?.items?.map({$0.track.album.images[0].url}) {
+                cell.getPictures = recentlyPlayed
+            }
+            return cell
         }
         
-        
-
-        return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch homeSections[section] {
+        case .newReleases:
+            return "New Releases"
+        case .followSingers:
+            return "Currently Following"
         case .catrgories:
             return "Categories"
         case .artists:
-            return "Artists"
-        case .somethingElse:
-            return "Something else"
+            return "Artists You MAy Like"
+        case .recentlyPlayed:
+            return "Recently Played"
         }
     }
     
@@ -123,5 +206,5 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 enum HomeSections {
-    case catrgories, artists, somethingElse
+    case newReleases,followSingers, catrgories, artists, recentlyPlayed
 }

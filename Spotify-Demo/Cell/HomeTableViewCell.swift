@@ -13,27 +13,8 @@ class HomeTableViewCell: UITableViewCell {
     
     static let identifier = "homeTableViewCell"
     let homeView = HomeView()
-    var homeSections: [HomeSections] = [.catrgories, .artists, .somethingElse]
-    
-    var musicCategory: RankPlaylist? {
-        didSet{
-//            print(musicCategory)
-            DispatchQueue.main.async {
-                self.myCollectionview.reloadData()
-            }
-        }
-    }
-    
-    var testArray: [String] = []  {
-        didSet{
-//            print(relatedArtists)
-            DispatchQueue.main.async {
-                self.myCollectionview.reloadData()
-            }
-        }
-    }
-    
-    var relatedArtists: ArtistsList? {
+    var isCircle: Bool = false
+    var getPictures: [String] = []  {
         didSet{
 //            print(relatedArtists)
             DispatchQueue.main.async {
@@ -47,12 +28,13 @@ class HomeTableViewCell: UITableViewCell {
     var myCollectionview: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 200, height: 150)
+        layout.itemSize = CGSize(width: 150, height: 150)
         layout.minimumInteritemSpacing = 3
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
-        cv.backgroundColor = .purple
+        cv.backgroundColor = .clear
+        cv.showsHorizontalScrollIndicator = false
         
         return cv
     }()
@@ -61,6 +43,7 @@ class HomeTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
         setSubviews()
         setLayouts()
         myCollectionview.delegate = self
@@ -98,41 +81,20 @@ extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return testArray.count
-//        switch homeSections[section] {
-//        case .catrgories:
-//            return musicCategory?.playlists.items.count ?? 0
-//        case .artists:
-//            return relatedArtists?.artists.count ?? 0
-//        case .somethingElse:
-//            return 0
-//        }
+        return getPictures.count
         
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
         
-        if let url = URL(string: testArray[indexPath.row]) {
+        guard let url = URL(string: getPictures[indexPath.row]) else { return UICollectionViewCell() }
             cell.myImageView.getImages(url: url)
-            return cell
+        if isCircle == true {
+            cell.myImageView.layer.cornerRadius = cell.myImageView.frame.width/2
         }
-//        switch homeSections[indexPath.section] {
-//        case .catrgories:
-//            if let url = URL(string: musicCategory?.playlists.items[indexPath.row].images.first?.url ?? "") {
-//                cell.myImageView.getImages(url: url)
-//                return cell
-//            }
-//        case .artists:
-//            if let url = URL(string: relatedArtists?.artists[indexPath.row].images.first?.url ?? "") {
-//                cell.myImageView.getImages(url: url)
-//            }
-//                return cell
-//        case .somethingElse:
-//            break
-//        }
-        
-        return cell
+            return cell
+
     }
     
     
