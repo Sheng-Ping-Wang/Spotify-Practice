@@ -15,24 +15,28 @@ class SearchResultTableViewCell: UITableViewCell {
     
     //MARK: - IBOutlets
     
-    let myImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .orange
+    let myImageView: GetImageView = {
+        let iv = GetImageView()
+        iv.backgroundColor = .clear
         iv.layer.cornerRadius = 10
+        iv.clipsToBounds = true
         return iv
     }()
     
     let songLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont(name: "Arial Bold", size: 16)
         label.textAlignment = .left
-        label.backgroundColor = .brown
+        label.backgroundColor = .clear
         return label
     }()
     
     let singerLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.textAlignment = .left
-        label.backgroundColor = .brown
+        label.backgroundColor = .clear
         return label
     }()
     

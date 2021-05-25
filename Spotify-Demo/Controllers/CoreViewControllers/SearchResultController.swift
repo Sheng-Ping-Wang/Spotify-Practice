@@ -14,7 +14,9 @@ class SearchResultController: UIViewController {
     let searchResultView = SearchResultView()
     var searchResult: SearchResult? {
         didSet{
-            searchResultView.resultTableView.reloadData()
+            DispatchQueue.main.async {
+                self.searchResultView.resultTableView.reloadData()
+            }
         }
     }
     
@@ -50,12 +52,18 @@ class SearchResultController: UIViewController {
 extension SearchResultController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return searchResult?.tracks.items.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier, for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell()}
         
+        guard let result = searchResult?.tracks.items.map({$0}) else { return UITableViewCell() }
+        if let url = URL(string: result[indexPath.row].album.images[0].url) {
+            cell.myImageView.getImages(url: url)
+            cell.songLabel.text = result[indexPath.row].name
+            cell.singerLabel.text = result[indexPath.row].artists[0].name
+        }
         return cell
     }
     
