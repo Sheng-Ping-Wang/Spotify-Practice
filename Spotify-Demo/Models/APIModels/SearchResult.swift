@@ -37,7 +37,7 @@ struct Item: Codable {
     let isLocal: Bool?
     let name: String
     let popularity: Int?
-    let previewURL: String?
+    let preview_url: String?
     let trackNumber: Int?
     let type: ItemType?
     let uri: String?

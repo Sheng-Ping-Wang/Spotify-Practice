@@ -28,6 +28,7 @@ class SearchResultView: UIView {
             tf.rightViewMode = .always
             tf.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
             tf.leftViewMode = .always
+            
             return tf
         }()
     
@@ -36,6 +37,18 @@ class SearchResultView: UIView {
         tv.register(SearchResultTableViewCell.self, forCellReuseIdentifier: SearchResultTableViewCell.identifier)
         tv.backgroundColor = .clear
         return tv
+    }()
+    
+    let errorLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.lineBreakMode = .byCharWrapping
+        label.backgroundColor = .clear
+        label.font = UIFont(name: "Arial Bold", size: 20)
+        label.isHidden = true
+        return label
     }()
     
     //MARK: - Init
@@ -56,6 +69,7 @@ class SearchResultView: UIView {
     func setSubViews() {
         self.addSubview(searchTextField)
         self.addSubview(resultTableView)
+        self.addSubview(errorLabel)
     }
     
     //MARK: - Set Layouts
@@ -73,6 +87,12 @@ class SearchResultView: UIView {
             make.top.equalTo(searchTextField.snp.bottom).offset(+8)
             make.bottom.equalTo(self.snp.bottomMargin)
             make.width.centerX.equalTo(self)
+        }
+        
+        errorLabel.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(self)
+            make.width.equalTo(self).dividedBy(1.3)
+            make.height.equalTo(200)
         }
     }
 }

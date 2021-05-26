@@ -74,11 +74,18 @@ class HomeViewController: UIViewController {
         homeView.homeTableView.delegate = self
         homeView.homeTableView.dataSource = self
         
-        getRankAPI()
+        getHomeAPI()
         
     }
     
     //MARK: - Functions
+    
+    func getHomeAPI() {
+        getRankAPI()
+        getRecentlyPlayed()
+        getNewReleases()
+        getCurrentlyFollowing()
+    }
     
     func getRankAPI() {
         APICaller.shared.getRankAPI{ result in
@@ -89,16 +96,21 @@ class HomeViewController: UIViewController {
                 print(error)
             }
         }
-        
-        APICaller.shared.getArtistsList { result in
+    }
+    
+    func getRelatedArtist(relatedArtistID: String) {
+        APICaller.shared.getArtistsList(id: relatedArtistID) { result in
             switch result {
             case .success(let list):
                 self.relatedArtists = list
+                print(list)
             case .failure(let error):
                 print(error)
             }
         }
-        
+    }
+    
+    func getRecentlyPlayed() {
         APICaller.shared.getRecentlyPlayed { result in
             switch result {
             case .success(let list):
@@ -107,7 +119,9 @@ class HomeViewController: UIViewController {
                 print(error)
             }
         }
-        
+    }
+    
+    func getNewReleases() {
         APICaller.shared.getNewReleases { result in
             switch result {
             case .success(let list):
@@ -116,19 +130,19 @@ class HomeViewController: UIViewController {
                 print(error)
             }
         }
-        
+    }
+    
+    func getCurrentlyFollowing() {
         APICaller.shared.getCurrentlylyFollowing { result in
             switch result {
             case .success(let list):
                 self.currentlyFollowing = list
+                self.getRelatedArtist(relatedArtistID: list.artists.items[0].id)
             case .failure(let error):
                 print(error)
             }
         }
-        
     }
-    
-    
 
     
 }
@@ -183,8 +197,31 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch homeSections[section] {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let label = UILabel()
+        label.font = UIFont(name: "Kefa", size: 20)
+        label.textColor = .white
+        label.text = HomeSections.allCases[section].string
+        return label
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+    
+}
+
+
+enum HomeSections: CaseIterable {
+    case newReleases,followSingers, catrgories, artists, recentlyPlayed
+    
+    var string: String {
+        switch self {
         case .newReleases:
             return "New Releases"
         case .followSingers:
@@ -197,14 +234,4 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return "Recently Played"
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-    
-}
-
-
-enum HomeSections {
-    case newReleases,followSingers, catrgories, artists, recentlyPlayed
 }

@@ -122,9 +122,9 @@ class APICaller {
         }
     }
     
-    func getArtistsList(completion: @escaping (Result<ArtistsList, Error>) -> Void) {
+    func getArtistsList(id: String, completion: @escaping (Result<ArtistsList, Error>) -> Void) {
         
-        creatRequest(with: URL(string: Constants.baseAPIURL + "/artists/6eUKZXaKkcviH0Ku9w2n3V/related-artists"), type: .GET) { ArtistsListRequest in
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/artists/\(id)/related-artists"), type: .GET) { ArtistsListRequest in
             let task = URLSession.shared.dataTask(with: ArtistsListRequest) { (data, response, error) in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))

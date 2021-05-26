@@ -44,6 +44,8 @@
 		465E99B4265B9C4100610538 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99B3265B9C4100610538 /* SearchResultView.swift */; };
 		465E99B7265BB07300610538 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99B6265BB07300610538 /* SearchResultTableViewCell.swift */; };
 		465E99BA265BD00F00610538 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99B9265BD00F00610538 /* HomePageModel.swift */; };
+		465E99C8265CC4E900610538 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99C7265CC4E900610538 /* PlayerViewController.swift */; };
+		465E99CB265D370F00610538 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99CA265D370F00610538 /* PlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +87,8 @@
 		465E99B3265B9C4100610538 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		465E99B6265BB07300610538 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		465E99B9265BD00F00610538 /* HomePageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
+		465E99C7265CC4E900610538 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		465E99CA265D370F00610538 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +127,6 @@
 				465E994426565F5C00610538 /* Extension */,
 				465E990126551E3F00610538 /* Managers */,
 				465E990026551E3000610538 /* ViewModels */,
-				465E98FF26551E2800610538 /* Resources */,
 				465E98FD26551DEF00610538 /* Models */,
 				465E98FC26551DE400610538 /* Views */,
 				465E993F26565B3600610538 /* Cell */,
@@ -143,6 +146,7 @@
 				465E99B3265B9C4100610538 /* SearchResultView.swift */,
 				465E99392656549B00610538 /* LibraryView.swift */,
 				465E993C265654A700610538 /* ProfileView.swift */,
+				465E99CA265D370F00610538 /* PlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,13 +168,6 @@
 				465E991026551F5100610538 /* CoreViewControllers */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		465E98FF26551E2800610538 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		465E990026551E3000610538 /* ViewModels */ = {
@@ -198,6 +195,7 @@
 				465E99B0265B9B2500610538 /* SearchResultController.swift */,
 				465E990C26551F4200610538 /* LibraryViewController.swift */,
 				465E992C265623E500610538 /* ProfileViewController.swift */,
+				465E99C7265CC4E900610538 /* PlayerViewController.swift */,
 			);
 			path = CoreViewControllers;
 			sourceTree = "<group>";
@@ -346,8 +344,10 @@
 				465E99BA265BD00F00610538 /* HomePageModel.swift in Sources */,
 				465E992A26561EBE00610538 /* UserProfile.swift in Sources */,
 				465E99B1265B9B2500610538 /* SearchResultController.swift in Sources */,
+				465E99C8265CC4E900610538 /* PlayerViewController.swift in Sources */,
 				465E99B7265BB07300610538 /* SearchResultTableViewCell.swift in Sources */,
 				465E99AD265B749300610538 /* SearchCollectionReusableHeader.swift in Sources */,
+				465E99CB265D370F00610538 /* PlayerView.swift in Sources */,
 				465E99272656067300610538 /* AuthResponse.swift in Sources */,
 				465E999A265A9B4F00610538 /* NewReleases.swift in Sources */,
 				465E99302656368200610538 /* SearchResult.swift in Sources */,

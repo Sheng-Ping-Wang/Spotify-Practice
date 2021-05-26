@@ -18,6 +18,21 @@ class HomeView: UIView {
         return tv
     }()
     
+    let headerLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial", size: 20)
+        label.textAlignment = .left
+        label.textColor = .white
+        return label
+    }()
+    
+    lazy var homeHeaderView: UIView = {
+        let view = UIView()
+        view.addSubview(headerLabel)
+        view.backgroundColor = .orange
+        return view
+    }()
+    
     //MARK: - Init
     
     override init(frame: CGRect) {
@@ -44,6 +59,12 @@ class HomeView: UIView {
             make.top.equalTo(self.snp.topMargin)
             make.bottom.equalTo(self.snp.bottomMargin)
             make.centerX.width.equalTo(self)
+        }
+        
+        headerLabel.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(homeHeaderView)
+            make.height.equalTo(homeHeaderView)
+            make.width.equalTo(homeHeaderView).offset(-50)
         }
         
     }
