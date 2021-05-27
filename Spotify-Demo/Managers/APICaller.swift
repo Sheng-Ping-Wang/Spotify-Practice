@@ -45,8 +45,9 @@ class APICaller {
                     return
                 }
                 do{
-                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(result)
+                    let decoder = JSONDecoder()
+                    let profile = try decoder.decode(UserProfile.self, from: data)
+                    completion(.success(profile))
                 }catch{
                     completion(.failure(error))
                 }
@@ -69,8 +70,6 @@ class APICaller {
                     let decoder = JSONDecoder()
                     let song = try decoder.decode(SearchResult.self, from: data)
                     completion(.success(song))
-//                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                    print("let's seeeeeeeee\(result)")
                 }catch{
                     completion(.failure(error))
                 }
@@ -133,7 +132,6 @@ class APICaller {
                 do{
                     let decoder = JSONDecoder()
                     let list = try decoder.decode(ArtistsList.self, from: data)
-//                    print(test)
                     completion(.success(list))
                 }catch{
                     print(error)
@@ -197,6 +195,48 @@ class APICaller {
                 do{
                     let decoder = JSONDecoder()
                     let list = try decoder.decode(CurrentlyFollowing.self, from: data)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func getCurrentUserPlaylist(completion: @escaping (Result<Library, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/me/playlists"), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(Library.self, from: data)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func getArtistTopTracks(id: String, completion: @escaping (Result<ArtistTopTracks, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/artists/\(id)/top-tracks?market=TW"), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(ArtistTopTracks.self, from: data)
                     completion(.success(list))
                 }catch{
                     print(error)

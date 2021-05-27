@@ -42,7 +42,6 @@ class SearchResultController: UIViewController {
                     DispatchQueue.main.async {
                         self.searchResultView.resultTableView.isHidden = false
                         self.searchResultView.errorLabel.isHidden = true
-                        print(songs)
                     }
                 case .failure(let error):
                     print("Error: \(error)")
@@ -72,7 +71,7 @@ extension SearchResultController: UITableViewDelegate, UITableViewDataSource {
         guard let result = searchResult?.tracks.items.map({$0}) else { return UITableViewCell() }
         let info = result[indexPath.row]
         
-        if let url = URL(string: info.album.images[0].url) {
+        if let url = URL(string: info.album.images[0].url ?? "") {
             cell.myImageView.getImages(url: url)
             cell.songLabel.text = info.name
             cell.singerLabel.text = info.artists[0].name

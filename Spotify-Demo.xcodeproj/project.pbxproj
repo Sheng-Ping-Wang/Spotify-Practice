@@ -46,6 +46,11 @@
 		465E99BA265BD00F00610538 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99B9265BD00F00610538 /* HomePageModel.swift */; };
 		465E99C8265CC4E900610538 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99C7265CC4E900610538 /* PlayerViewController.swift */; };
 		465E99CB265D370F00610538 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99CA265D370F00610538 /* PlayerView.swift */; };
+		465E99D2265E2D0900610538 /* LibraryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99D1265E2D0900610538 /* LibraryTableViewCell.swift */; };
+		465E99D5265E333600610538 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99D4265E333600610538 /* Library.swift */; };
+		465E99DD265E784000610538 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99DC265E784000610538 /* PlayerTableViewCell.swift */; };
+		465E99E0265E789A00610538 /* PlayerPlaylistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465E99DF265E789A00610538 /* PlayerPlaylistTableViewCell.swift */; };
+		46970E0F265F67BA009F3DE1 /* ArtistTopTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46970E0E265F67BA009F3DE1 /* ArtistTopTracks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +94,11 @@
 		465E99B9265BD00F00610538 /* HomePageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		465E99C7265CC4E900610538 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		465E99CA265D370F00610538 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		465E99D1265E2D0900610538 /* LibraryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewCell.swift; sourceTree = "<group>"; };
+		465E99D4265E333600610538 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
+		465E99DC265E784000610538 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
+		465E99DF265E789A00610538 /* PlayerPlaylistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPlaylistTableViewCell.swift; sourceTree = "<group>"; };
+		46970E0E265F67BA009F3DE1 /* ArtistTopTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistTopTracks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +227,9 @@
 				465E99A8265B6FCB00610538 /* SearchCollectionViewCell.swift */,
 				465E99AC265B749300610538 /* SearchCollectionReusableHeader.swift */,
 				465E99B6265BB07300610538 /* SearchResultTableViewCell.swift */,
+				465E99D1265E2D0900610538 /* LibraryTableViewCell.swift */,
+				465E99DC265E784000610538 /* PlayerTableViewCell.swift */,
+				465E99DF265E789A00610538 /* PlayerPlaylistTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -241,6 +254,8 @@
 				465E9999265A9B4F00610538 /* NewReleases.swift */,
 				465E999C265AA6FB00610538 /* CurrentlyFollowing.swift */,
 				465E997926577B1E00610538 /* Brouse.swift */,
+				465E99D4265E333600610538 /* Library.swift */,
+				46970E0E265F67BA009F3DE1 /* ArtistTopTracks.swift */,
 			);
 			path = APIModels;
 			sourceTree = "<group>";
@@ -323,18 +338,23 @@
 				465E990926551F2C00610538 /* SearchViewController.swift in Sources */,
 				465E99B4265B9C4100610538 /* SearchResultView.swift in Sources */,
 				465E991B2655201300610538 /* AuthManager.swift in Sources */,
+				465E99D5265E333600610538 /* Library.swift in Sources */,
 				465E9984265795F500610538 /* HomeCollectionViewCell.swift in Sources */,
 				465E991826551FC800610538 /* WelcomeViewController.swift in Sources */,
+				465E99DD265E784000610538 /* PlayerTableViewCell.swift in Sources */,
 				465E999D265AA6FB00610538 /* CurrentlyFollowing.swift in Sources */,
+				46970E0F265F67BA009F3DE1 /* ArtistTopTracks.swift in Sources */,
 				465E997A26577B1E00610538 /* Brouse.swift in Sources */,
 				465E99342656547E00610538 /* HomeView.swift in Sources */,
 				465E991E2655201D00610538 /* APICaller.swift in Sources */,
 				465E990326551F0900610538 /* MyTabbarViewController.swift in Sources */,
+				465E99D2265E2D0900610538 /* LibraryTableViewCell.swift in Sources */,
 				465E994126565B7C00610538 /* HomeTableViewCell.swift in Sources */,
 				465E994626565F7100610538 /* BackgroundColor.swift in Sources */,
 				465E98EB26551A9900610538 /* HomeViewController.swift in Sources */,
 				465E991426551FBD00610538 /* AuthViewController.swift in Sources */,
 				465E99A9265B6FCB00610538 /* SearchCollectionViewCell.swift in Sources */,
+				465E99E0265E789A00610538 /* PlayerPlaylistTableViewCell.swift in Sources */,
 				465E98E726551A9900610538 /* AppDelegate.swift in Sources */,
 				465E993A2656549B00610538 /* LibraryView.swift in Sources */,
 				465E99902658E29200610538 /* GetImages.swift in Sources */,

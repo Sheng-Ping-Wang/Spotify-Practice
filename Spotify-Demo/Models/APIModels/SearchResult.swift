@@ -25,8 +25,8 @@ struct Tracks: Codable {
 
 // MARK: - Item
 struct Item: Codable {
-    let album: Album
-    let artists: [Artist]
+    var album: Album
+    var artists: [Artist]
 //    let availableMarkets: [String]
     let discNumber, durationMS: Int?
     let explicit: Bool
@@ -35,7 +35,7 @@ struct Item: Codable {
     let href: String?
     let id: String?
     let isLocal: Bool?
-    let name: String
+    var name: String
     let popularity: Int?
     let preview_url: String?
     let trackNumber: Int?
@@ -62,12 +62,12 @@ struct Item: Codable {
 // MARK: - Album
 struct Album: Codable {
 //    let albumType: AlbumTypeEnum
-    let artists: [Artist]
+    var artists: [Artist]
 //    let availableMarkets: [String]
 //    let externalUrls: ExternalUrls
     let href: String
     let id: String
-    let images: [Image]
+    var images: [Image]
     let name, releaseDate: String?
     let releaseDatePrecision: ReleaseDatePrecision?
     let totalTracks: Int?
@@ -96,7 +96,7 @@ struct Album: Codable {
 struct Artist: Codable {
 //    let externalUrls: ExternalUrls
     let href: String
-    let id, name: String
+    var id, name: String
     let type: ArtistType
     let uri: String
 
@@ -118,7 +118,7 @@ enum ArtistType: String, Codable {
 // MARK: - Image
 struct Image: Codable {
     let height: Int
-    let url: String
+    var url: String
     let width: Int
 }
 

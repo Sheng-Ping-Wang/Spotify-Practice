@@ -12,25 +12,43 @@ class ProfileViewController: UIViewController {
     //MARK: - Properties
     
     let profileView = ProfileView()
+    var userProfile: UserProfile?
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view = profileView
+        getProfile()
         
+    }
+    
+    //MARK: - Functions
+    
+    func getProfile() {
         APICaller.shared.getCurrentUserProfile { (result) in
             switch result {
-            case .success(let model):
-                break
+            case .success(let profile):
+                self.userProfile = profile
+                DispatchQueue.main.async {
+                    self.setProfile()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
     
-    //MARK: - Functions
-    
-    
+    func setProfile() {
+        guard let url = URL(string: userProfile?.images[0].url ?? "") else { return }
+        if let userProfile = userProfile {
+            profileView.profileImageView.getImages(url: url)
+            profileView.followersNumberLabel.text = "\(userProfile.followers.total)"
+            profileView.userNameLabel.text = "Name: " + userProfile.displayName
+            profileView.countryLabel.text = "Country: " + userProfile.country
+            profileView.emailLabel.text = "Email: " + userProfile.email
+        }
+        
+    }
     
 }

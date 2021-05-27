@@ -23,6 +23,9 @@ class HomeViewController: UIViewController {
 //        }
 //    }
 
+
+    
+    
     var musicCategory: RankPlaylist? {
         didSet{
             DispatchQueue.main.async {
@@ -73,7 +76,6 @@ class HomeViewController: UIViewController {
         view = homeView
         homeView.homeTableView.delegate = self
         homeView.homeTableView.dataSource = self
-        
         getHomeAPI()
         
     }
@@ -103,7 +105,6 @@ class HomeViewController: UIViewController {
             switch result {
             case .success(let list):
                 self.relatedArtists = list
-                print(list)
             case .failure(let error):
                 print(error)
             }
@@ -229,7 +230,7 @@ enum HomeSections: CaseIterable {
         case .catrgories:
             return "Categories"
         case .artists:
-            return "Artists You MAy Like"
+            return "Artists You May Like"
         case .recentlyPlayed:
             return "Recently Played"
         }

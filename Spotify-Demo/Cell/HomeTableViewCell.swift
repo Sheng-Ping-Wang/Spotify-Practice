@@ -93,6 +93,7 @@ extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
         if isCircle == true {
             cell.myImageView.layer.cornerRadius = cell.myImageView.frame.width/2
         }
+        
             return cell
 
     }
