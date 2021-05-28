@@ -34,7 +34,7 @@ class SearchResultController: UIViewController {
     
     @objc func search() {
         
-        if let text = searchResultView.searchTextField.text?.replacingOccurrences(of: " ", with: "") {
+        if let text = searchResultView.searchTextField.text?.replacingOccurrences(of: " ", with: "%20") {
             APICaller.shared.searchSong(text: text) { result in
                 switch result {
                 case .success(let songs):
@@ -83,6 +83,7 @@ extension SearchResultController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let playerVC = PlayerViewController()
         playerVC.song = searchResult?.tracks.items[indexPath.row]
+        playerVC.isPlaylist = false
         present(playerVC, animated: true, completion: nil)
     }
     

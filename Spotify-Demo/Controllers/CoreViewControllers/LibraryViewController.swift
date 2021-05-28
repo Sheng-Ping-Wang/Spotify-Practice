@@ -49,14 +49,14 @@ class LibraryViewController: UIViewController {
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userPlaylist?.items.count ?? 0
+        return userPlaylist?.items?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: LibraryTableViewCell.identifier, for: indexPath) as? LibraryTableViewCell else { return UITableViewCell()}
         
-        let playlist = userPlaylist?.items[indexPath.row]
-        if let url = URL(string: playlist?.images[0].url ?? "") {
+        let playlist = userPlaylist?.items?[indexPath.row]
+        if let url = URL(string: playlist?.images?[0].url ?? "") {
             cell.myImageView.getImages(url: url)
             cell.playListNameLabel.text = playlist?.name
         }
@@ -66,7 +66,8 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let playerVC = PlayerViewController()
-        playerVC.song?.album.images[0].url = userPlaylist?.items[indexPath.row].images[0].url ?? ""
+        playerVC.playlistUrl = userPlaylist?.items?[indexPath.row].tracks?.href
+        playerVC.isPlaylist = true
         present(playerVC, animated: true, completion: nil)
     }
     

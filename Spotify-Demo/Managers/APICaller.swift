@@ -247,6 +247,25 @@ class APICaller {
         }
     }
     
-    
+    func getMyPlaylist(url: String, completion: @escaping (Result<MyPlaylist, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: url), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(MyPlaylist.self, from: data)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
     
 }

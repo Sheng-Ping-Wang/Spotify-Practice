@@ -28,6 +28,20 @@ class PlayerViewController: UIViewController {
         }
     }
     var isPlaying: Bool = true
+    var playlistUrl: String? {
+        didSet{
+            gerMyPlaylist()
+        }
+    }
+    var isPlaylist: Bool = true
+    var myPlaylist: MyPlaylist? {
+        didSet{
+            DispatchQueue.main.async {
+                self.playerView.playerTableView.reloadData()
+            }
+        }
+    }
+    
     
     //MARK: - Life Cycle
     
@@ -36,7 +50,6 @@ class PlayerViewController: UIViewController {
         view = playerView
         playerView.playerTableView.delegate = self
         playerView.playerTableView.dataSource = self
-
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -59,18 +72,20 @@ class PlayerViewController: UIViewController {
         }
     }
 
+    //顯示在UI上的資料
     func getSongInfo(imageView: GetImageView, songLabel: UILabel, artistLabel: UILabel) {
             guard let url = URL(string: song?.album.images[0].url ?? "") else { return }
             imageView.getImages(url: url)
             songLabel.text = song?.name
             artistLabel.text = song?.artists[0].name
-            playSong()
+            playSong(url: song?.preview_url ?? "")
     }
 
-    func playSong() {
-        guard let url = URL(string: song?.preview_url ?? "") else { return }
+    func playSong(url: String) {
+        
+        guard let url = URL(string: url) else { return }
         player = AVPlayer(url: url)
-        player?.volume = 0.2
+        player?.volume = 0.5
         player?.play()
     }
     
@@ -84,9 +99,23 @@ class PlayerViewController: UIViewController {
             }
         }
     }
+    
+    func gerMyPlaylist() {
+        APICaller.shared.getMyPlaylist(url: playlistUrl ?? "") { (result) in
+            switch result {
+            case .success(let playlist):
+                self.myPlaylist = playlist
+                self.song = playlist.items[0].track
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 
 }
 
+
+//MARK: - UITableViewDelegate, UITableViewDataSource
 extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -98,37 +127,51 @@ extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
         case .player:
             return 1
         case .playlist:
-            return topTracks?.tracks.count ?? 0
+            if isPlaylist == true {
+                return myPlaylist?.items.count ?? 0
+            }else{
+                return topTracks?.tracks.count ?? 0
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch mySection[indexPath.section] {
+        
         case .player:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerTableViewCell.identifier, for: indexPath) as? PlayerTableViewCell else { return UITableViewCell() }
             cell.pausePlayBtnDidTap = {
                 self.pausePlay(button: cell.pausePlayBtn, config: cell.config)
             }
-            
             cell.sliderDidTouch = {
                 self.player?.volume = cell.slider.value
             }
-            
             getSongInfo(imageView: cell.myImageView, songLabel: cell.songLabel, artistLabel: cell.singerLabel)
-            
             return cell
-        case .playlist:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerPlaylistTableViewCell.identifier, for: indexPath) as? PlayerPlaylistTableViewCell else { return UITableViewCell() }
-            if let track = topTracks?.tracks[indexPath.row] {
-                if let url = URL(string: track.album.images[0].url ?? "" ) {
-                    cell.myImageView.getImages(url: url)
-                    cell.songLabel.text = track.name
-                    cell.singerLabel.text = "\(track.artists[0].name)"
-                }
-
-            }
             
-                        
+        case .playlist:
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerPlaylistTableViewCell.identifier, for: indexPath) as? PlayerPlaylistTableViewCell else { return UITableViewCell() }
+            
+            if isPlaylist == true {
+                if let playlist = myPlaylist?.items[indexPath.row] {
+                    if let url = URL(string: playlist.track?.album.images[0].url ?? "" ) {
+                        cell.myImageView.getImages(url: url)
+                        cell.songLabel.text = playlist.track?.name
+                        if let singer = playlist.track?.album.artists[0].name {
+                            cell.singerLabel.text = singer
+                        }
+                    }
+                }
+            }else{
+                if let track = topTracks?.tracks[i ndexPath.row] {
+                    if let url = URL(string: track.album.images[0].url) {
+                        cell.myImageView.getImages(url: url)
+                        cell.songLabel.text = track.name
+                        cell.singerLabel.text = "\(track.artists[0].name)"
+                    }
+                }
+            }
             return cell
         }
         
@@ -145,8 +188,12 @@ extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.song = topTracks?.tracks[indexPath.row]
-        player?.play()
+        if isPlaylist == true {
+            playSong(url: myPlaylist?.items[indexPath.row].track?.preview_url ?? "")
+        }else{
+            self.song = topTracks?.tracks[indexPath.row]
+        }
+        
     }
     
     

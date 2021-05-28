@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Welcome
 struct Library: Codable {
     let href: String
-    let items: [LibraryItem]
+    let items: [LibraryItem]?
     let limit: Int
 //    let next: JSONNull?
     let offset: Int
@@ -25,7 +25,7 @@ struct LibraryItem: Codable {
 //    let externalUrls: ExternalUrls
     let href: String
     let id: String
-    let images: [LibraryImage]
+    let images: [LibraryImage]?
     let name: String
 //    let owner: Owner
 //    let primaryColor: JSONNull?
@@ -53,9 +53,9 @@ struct LibraryItem: Codable {
 
 // MARK: - Image
 struct LibraryImage: Codable {
-    let height: Int
+    let height: Int?
     let url: String
-    let width: Int
+    let width: Int?
 }
 
 // MARK: - Owner
