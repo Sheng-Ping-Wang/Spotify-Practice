@@ -14,13 +14,16 @@ struct HomePageModel {
     var newReleases: NewReleases
     var recentlyPlayed: RecentlyPlayed
     var currentlyFollowing: CurrentlyFollowing
-//    
-//    init(musicCategory: RankPlaylist, relatedArtists: ArtistsList, newReleases: NewReleases, recentlyPlayed: RecentlyPlayed, currentlyFollowing: CurrentlyFollowing) {
-//        self.musicCategory = musicCategory
-//        self.relatedArtists = relatedArtists
-//        self.newReleases = newReleases
-//        self.recentlyPlayed = recentlyPlayed
-//        self.currentlyFollowing = currentlyFollowing
-//    }
     
+}
+
+struct ImageUrlAndhref {
+    var imageUrl: [String]
+    var href: [String]
+}
+
+struct Test: Codable {
+    let artists: [Artist]
+    let images: [Image]
+    let tracks: Tracks
 }

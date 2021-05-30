@@ -117,9 +117,9 @@ enum ArtistType: String, Codable {
 
 // MARK: - Image
 struct Image: Codable {
-    let height: Int
+    let height: Int?
     var url: String
-    let width: Int
+    let width: Int?
 }
 
 enum ReleaseDatePrecision: String, Codable {

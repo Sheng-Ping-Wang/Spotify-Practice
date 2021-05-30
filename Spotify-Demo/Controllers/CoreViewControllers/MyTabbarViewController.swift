@@ -11,7 +11,7 @@ class MyTabbarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let homeVC = HomeViewController()
         let searchVC = SearchViewController()
         let libraryVC = LibraryViewController()
@@ -46,6 +46,11 @@ class MyTabbarViewController: UITabBarController {
         nav2.navigationBar.barTintColor = UIColor.defaultColor()
         nav3.navigationBar.barTintColor = UIColor.defaultColor()
         nav4.navigationBar.barTintColor = UIColor.defaultColor()
+        
+        nav1.navigationBar.tintColor = .white
+        nav2.navigationBar.tintColor = .white
+        nav3.navigationBar.tintColor = .white
+        nav4.navigationBar.tintColor = .white
         
         guard let font = UIFont(name: "Kefa", size: 40) else { return }
         nav1.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, .font: font]

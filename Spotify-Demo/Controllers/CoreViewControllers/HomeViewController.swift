@@ -11,20 +11,11 @@ class HomeViewController: UIViewController {
 
     //MARK: - Properties
     
+    var imageUrlAndhref = ImageUrlAndhref(imageUrl: [], href: [])
+    
     let homeView = HomeView()
     
     var homeSections: [HomeSections] = [.newReleases, .followSingers, .catrgories, .artists, .recentlyPlayed]
-    
-//    var homePageModel: HomePageModel? {
-//        didSet{
-//            DispatchQueue.main.async {
-//                self.homeView.homeTableView.reloadData()
-//            }
-//        }
-//    }
-
-
-    
     
     var musicCategory: RankPlaylist? {
         didSet{
@@ -66,7 +57,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
+    var myIndexPath: Int?
     
     
     //MARK: - Life Cycle
@@ -77,7 +68,6 @@ class HomeViewController: UIViewController {
         homeView.homeTableView.delegate = self
         homeView.homeTableView.dataSource = self
         getHomeAPI()
-        
     }
     
     //MARK: - Functions
@@ -155,44 +145,63 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return 1
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as? HomeTableViewCell else { return UITableViewCell() }
-
+        cell.delegate = self
         switch homeSections[indexPath.section] {
         case .newReleases:
-            if let newReleases = self.newReleases?.albums.items.map({$0.images[0].url}) {
-            cell.getPictures = newReleases
+            if let newReleases = self.newReleases?.albums.items.map({$0.images[0].url}), let newReleasesHref = self.newReleases?.albums.items.map({$0.href}) {
+                imageUrlAndhref.imageUrl = newReleases
+                imageUrlAndhref.href = newReleasesHref
+                cell.imageUrlAndhref = self.imageUrlAndhref
+//            cell.getPictures = newReleases
             }
+//            cell.newReleases = self.newReleases
             return cell
         
         case .followSingers:
-            if let currentlyFollowing = self.currentlyFollowing?.artists.items.map({$0.images[0].url}) {
-                cell.getPictures = currentlyFollowing
+            if let currentlyFollowing = self.currentlyFollowing?.artists.items.map({$0.images[0].url}), let currentlyFollowingHref = self.currentlyFollowing?.artists.items.map({$0.href}) {
+                imageUrlAndhref.imageUrl = currentlyFollowing
+                imageUrlAndhref.href = currentlyFollowingHref
+                cell.imageUrlAndhref = self.imageUrlAndhref
+//                cell.getPictures = currentlyFollowing
                 cell.isCircle = true
             }
+//            cell.currentlyFollowing = self.currentlyFollowing
             return cell
             
         case .catrgories:
-            if let categories = self.musicCategory?.playlists.items.map({$0.images[0].url}) {
-            cell.getPictures = categories
+            if let categories = self.musicCategory?.playlists.items.map({$0.images[0].url}), let categoriesHref = self.musicCategory?.playlists.items.map({$0.href}) {
+                imageUrlAndhref.imageUrl = categories
+                imageUrlAndhref.href = categoriesHref
+                cell.imageUrlAndhref = self.imageUrlAndhref
+//            cell.getPictures = categories
             }
+//            cell.musicCategory = self.musicCategory
             return cell
             
         case .artists:
-            if let playlist = self.relatedArtists?.artists.map({$0.images[0].url}){
-                cell.getPictures = playlist
+            if let playlist = self.relatedArtists?.artists.map({$0.images[0].url}), let playlistHref = self.relatedArtists?.artists.map({$0.href}) {
+                imageUrlAndhref.imageUrl = playlist
+                imageUrlAndhref.href = playlistHref
+                cell.imageUrlAndhref = self.imageUrlAndhref
+//                cell.getPictures = playlist
             }
+//            cell.relatedArtists = self.relatedArtists
             return cell
             
         case .recentlyPlayed:
-            if let recentlyPlayed = self.recentlyPlayed?.items?.map({$0.track.album.images[0].url}) {
-                cell.getPictures = recentlyPlayed
+            if let recentlyPlayed = self.recentlyPlayed?.items?.map({$0.track.album.images[0].url}), let recentlyPlayedHref = self.recentlyPlayed?.items?.map({$0.track.href}) {
+                imageUrlAndhref.imageUrl = recentlyPlayed
+                imageUrlAndhref.href = recentlyPlayedHref
+                cell.imageUrlAndhref = self.imageUrlAndhref
+//                cell.getPictures = recentlyPlayed
             }
+//            cell .recentlyPlayed = self.recentlyPlayed
             return cell
         }
         
@@ -236,3 +245,17 @@ enum HomeSections: CaseIterable {
         }
     }
 }
+
+
+extension HomeViewController: SendIndexPathDelegate {
+    func sendIndexPath(href: String) {
+        print(href)
+        let playerVC = PlayerViewController()
+        playerVC.playlistUrl = href
+        present(playerVC, animated: true, completion: nil)
+    }
+    
+    
+}
+
+

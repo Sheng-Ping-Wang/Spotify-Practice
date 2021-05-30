@@ -10,12 +10,12 @@ import Foundation
 // MARK: - Welcome
 struct MyPlaylist: Codable {
     let href: String
-    let items: [MyPlaylistItem]
-    let limit: Int
+    let items: [MyPlaylistItem]?
+    let limit: Int?
 //    let next: JSONNull?
-    let offset: Int
+    let offset: Int?
 //    let previous: JSONNull?
-    let total: Int
+    let total: Int?
 }
 
 // MARK: - Item

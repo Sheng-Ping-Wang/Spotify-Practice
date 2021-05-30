@@ -15,7 +15,7 @@ class SearchViewController: UIViewController {
     var brouseCatrgories: Brouse? {
         didSet{
             DispatchQueue.main.async {
-                self.searchView.searchCollectionview.reloadData()
+                self.searchView.searchCollectionView.reloadData()
             }
         }
     }
@@ -25,12 +25,9 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = searchView
-        searchView.searchCollectionview.delegate = self
-        searchView.searchCollectionview.dataSource = self
+        searchView.searchCollectionView.delegate = self
+        searchView.searchCollectionView.dataSource = self
         getCategories()
-        
-//        searchSongs()
-//        searchView.searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
     }
     
     //MARK: - Functions
@@ -40,10 +37,6 @@ class SearchViewController: UIViewController {
         let vc = SearchResultController()
         present(vc, animated: true, completion: nil)
     }
-    
-        
-        
-    
     
     func getCategories() {
         APICaller.shared.getCategories { result in
@@ -55,8 +48,6 @@ class SearchViewController: UIViewController {
             }
         }
     }
-    
-
 
 }
 
@@ -85,6 +76,11 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return header
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let categoryVC = CategoryViewController()
+        categoryVC.categoryID = brouseCatrgories?.categories.items[indexPath.row].id
+        navigationController?.pushViewController(categoryVC, animated: true)
+    }
     
     
 }

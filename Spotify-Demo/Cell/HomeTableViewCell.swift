@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SendIndexPathDelegate {
+    func sendIndexPath(href: String)
+}
+
 class HomeTableViewCell: UITableViewCell {
 
     //MARK: - Properties
@@ -22,6 +26,56 @@ class HomeTableViewCell: UITableViewCell {
             }
         }
     }
+    var imageUrlAndhref: ImageUrlAndhref? {
+        didSet{
+//            print(test)
+            DispatchQueue.main.async {
+                self.myCollectionview.reloadData()
+            }
+        }
+    }
+    
+//    var musicCategory: RankPlaylist? {
+//        didSet{
+//            if let categories = self.musicCategory?.playlists.items.map({$0.images[0].url}) {
+//                getPictures = categories
+//            }
+//        }
+//    }
+
+//    var relatedArtists: ArtistsList? {
+//        didSet{
+//            if let playlist = self.relatedArtists?.artists.map({$0.images[0].url}){
+//                getPictures = playlist
+//            }
+//        }
+//    }
+//    
+//    var newReleases: NewReleases? {
+//        didSet{
+//            if let newReleases = self.newReleases?.albums.items.map({$0.images[0].url}) {
+//                getPictures = newReleases
+//            }
+//        }
+//    }
+//    
+//    var recentlyPlayed: RecentlyPlayed? {
+//        didSet{
+//            if let recentlyPlayed = self.recentlyPlayed?.items?.map({$0.track.album.images[0].url}) {
+//                getPictures = recentlyPlayed
+//            }
+//        }
+//    }
+//    
+//    var currentlyFollowing: CurrentlyFollowing? {
+//        didSet{
+//            if let currentlyFollowing = self.currentlyFollowing?.artists.items.map({$0.images[0].url}) {
+//                getPictures = currentlyFollowing
+//            }
+//        }
+//    }
+    
+    var delegate: SendIndexPathDelegate?
     
     //MARK: - IBOutlets
     
@@ -81,21 +135,23 @@ extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return getPictures.count
+        return imageUrlAndhref?.imageUrl.count ?? 0
         
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
         
-        guard let url = URL(string: getPictures[indexPath.row]) else { return UICollectionViewCell() }
+        guard let url = URL(string: imageUrlAndhref?.imageUrl[indexPath.row] ?? "") else { return UICollectionViewCell() }
             cell.myImageView.getImages(url: url)
         if isCircle == true {
             cell.myImageView.layer.cornerRadius = cell.myImageView.frame.width/2
         }
-        
-            return cell
-
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.sendIndexPath(href: imageUrlAndhref?.href[indexPath.row] ?? "")
     }
     
     

@@ -268,4 +268,49 @@ class APICaller {
         }
     }
     
+    
+    
+    func getMyCategoryDetail(id: String, completion: @escaping (Result<CategoryDetail, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: Constants.baseAPIURL + "/browse/categories/\(id)/playlists"), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(CategoryDetail.self, from: data)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func getTest(url: String, completion: @escaping (Result<Test, Error>) -> Void) {
+        
+        creatRequest(with: URL(string: url), type: .GET) { Request in
+            let task = URLSession.shared.dataTask(with: Request) { (data, response, error) in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do{
+                    let decoder = JSONDecoder()
+                    let list = try decoder.decode(Test.self, from: data)
+                    completion(.success(list))
+                }catch{
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    
 }

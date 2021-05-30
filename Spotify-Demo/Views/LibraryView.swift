@@ -12,7 +12,7 @@ class LibraryView: UIView {
     //MARK: - IBOutlets
     
     let libraryTableView: UITableView = {
-        let tv = UITableView()
+        let tv = UITableView(frame: .zero, style: .insetGrouped)
         tv.register(LibraryTableViewCell.self, forCellReuseIdentifier: LibraryTableViewCell.identifier)
         tv.backgroundColor = .clear
         tv.separatorStyle = .none
@@ -30,10 +30,10 @@ class LibraryView: UIView {
         let path = UIBezierPath()
         let fullSizeWidth = libraryTableView.frame.width
         
-        path.move(to: .init(x: -1, y: 30))
-        path.addQuadCurve(to: CGPoint(x: 20, y: 10), controlPoint: CGPoint(x: 8, y: 10))
-        path.addLine(to: CGPoint(x: fullSizeWidth - 20, y: 10))
-        path.addQuadCurve(to: CGPoint(x: fullSizeWidth+1, y: 30), controlPoint: CGPoint(x: fullSizeWidth - 8, y: 10))
+        path.move(to: .init(x: -20, y: 30))
+        path.addQuadCurve(to: CGPoint(x: 0, y: 5), controlPoint: CGPoint(x: -5, y: 3))
+        path.addLine(to: CGPoint(x: fullSizeWidth - 40, y: 5))
+        path.addQuadCurve(to: CGPoint(x: fullSizeWidth - 20, y: 30), controlPoint: CGPoint(x: fullSizeWidth - 35, y: 3))
         shapeLayer.path = path.cgPath
         
         view.layer.addSublayer(shapeLayer)

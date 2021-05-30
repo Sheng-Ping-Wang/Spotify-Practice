@@ -15,6 +15,7 @@ class HomeView: UIView {
         let tv = UITableView(frame: .zero, style: .insetGrouped)
         tv.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
         tv.backgroundColor = .clear
+        tv.allowsSelection = true
         return tv
     }()
     
