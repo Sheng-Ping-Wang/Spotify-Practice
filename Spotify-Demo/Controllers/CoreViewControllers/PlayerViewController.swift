@@ -9,16 +9,16 @@ import UIKit
 import AVFoundation
 
 class PlayerViewController: UIViewController {
-
+    
     //MARK: - Properties
     
     var playerView = PlayerView()
     var mySection: [PlayerSection] = [.player, .playlist]
     var player: AVPlayer?
-    var song: Item? {
+    var song = PlaySongInfo() {
         didSet{
             getArtistTopTracks()
-            playSong(url: song?.preview_url ?? "")
+            playSong(url: song.previewUrl)
         }
     }
     var topTracks: ArtistTopTracks? {
@@ -76,10 +76,14 @@ class PlayerViewController: UIViewController {
 
     //顯示在UI上的資料
     func getSongInfo(imageView: GetImageView, songLabel: UILabel, artistLabel: UILabel) {
-        guard let url = URL(string: song?.album.images.first?.url ?? "") else { return }
+//        guard let url = URL(string: song?.album?.images.first?.url ?? "") else { return }
+//            imageView.getImages(url: url)
+//            songLabel.text = song?.name
+//        artistLabel.text = song?.artists.first?.name
+        guard let url = URL(string: song.imageUrl) else { return }
             imageView.getImages(url: url)
-            songLabel.text = song?.name
-        artistLabel.text = song?.artists.first?.name
+        songLabel.text = song.song
+        artistLabel.text = song.singer
             
     }
 
@@ -92,11 +96,12 @@ class PlayerViewController: UIViewController {
     }
     
     func getArtistTopTracks() {
-        APICaller.shared.getArtistTopTracks(id: song?.artists.first?.id ?? "") { (result) in
+        APICaller.shared.getArtistTopTracks(id: song.songID ?? "") { (result) in
             switch result {
             case .success(let tracks):
                 self.topTracks = tracks
             case .failure(let error):
+                print("dasdads")
                 print(error)
             }
         }
@@ -107,8 +112,13 @@ class PlayerViewController: UIViewController {
             switch result {
             case .success(let playlist):
                 self.myPlaylist = playlist
-                self.song = playlist.items?.first?.track
+                self.song = PlaySongInfo(imageUrl: playlist.items?.first?.track?.album?.images.first?.url ?? "",
+                    song: playlist.items?.first?.track?.name ?? "",
+                    singer: playlist.items?.first?.track?.artists.first?.name ?? "",
+                    previewUrl: playlist.items?.first?.track?.preview_url ?? "",
+                    songID: playlist.items?.first?.track?.id)
             case .failure(let error):
+                print("dbshbdjhabjh")
                 print(error)
             }
         }
@@ -123,10 +133,13 @@ class PlayerViewController: UIViewController {
 //        }
 //    }
     
-    func isAudioAvailable(item: Item?) {
-        if item?.preview_url == nil {
+    func isAudioAvailable(item: PlaySongInfo) {
+        if item.previewUrl == "" {
             let alert = UIAlertController(title: "Oops", message: "The audition is not available.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            song.imageUrl = ""
+            song.singer = ""
+            song.song = ""
             player?.pause()
             isPlaying = false
             present(alert, animated: true, completion: nil)
@@ -173,10 +186,10 @@ extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
             getSongInfo(imageView: cell.myImageView, songLabel: cell.songLabel, artistLabel: cell.singerLabel)
             
             if isPlaying == true {
-                let image = UIImage(systemName: "pause.circle", withConfiguration: cell.config)
+                let image = UIImage(systemName: "pause.fill", withConfiguration: cell.config)
                 cell.pausePlayBtn.setImage(image, for: .normal)
             }else{
-                let image = UIImage(systemName: "play.circle", withConfiguration: cell.config)
+                let image = UIImage(systemName: "play.fill", withConfiguration: cell.config)
                 cell.pausePlayBtn.setImage(image, for: .normal)
             }
             return cell
@@ -187,17 +200,15 @@ extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
             
             if isPlaylist == true {
                 if let playlist = myPlaylist?.items?[indexPath.row] {
-                    if let url = URL(string: playlist.track?.album.images.first?.url ?? "" ) {
+                    if let url = URL(string: playlist.track?.album?.images.first?.url ?? "" ) {
                         cell.myImageView.getImages(url: url)
                         cell.songLabel.text = playlist.track?.name
-                        if let singer = playlist.track?.album.artists.first?.name {
-                            cell.singerLabel.text = singer
-                        }
+                        cell.singerLabel.text = playlist.track?.album?.artists.first?.name
                     }
                 }
             }else{
                 if let track = topTracks?.tracks[indexPath.row] {
-                    if let url = URL(string: track.album.images.first?.url ?? "") {
+                    if let url = URL(string: track.album?.images.first?.url ?? "") {
                         cell.myImageView.getImages(url: url)
                         cell.songLabel.text = track.name
                         cell.singerLabel.text = track.artists.first?.name
@@ -222,10 +233,22 @@ extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if isPlaylist == true {
-            isAudioAvailable(item: myPlaylist?.items?[indexPath.row].track)
+            let track = myPlaylist?.items?[indexPath.row].track
+            song = PlaySongInfo(imageUrl:
+            track?.album?.images.first?.url ?? "", song: track?.name ?? "",
+            singer: track?.artists.first?.name ?? "",
+            previewUrl: track?.preview_url ?? "",
+            songID: track?.artists.first?.id ?? "")
         }else{
-            isAudioAvailable(item: topTracks?.tracks[indexPath.row])
+            let track = topTracks?.tracks[indexPath.row]
+            song = PlaySongInfo(imageUrl:
+            track?.album?.images.first?.url ?? "",
+            song: track?.name ?? "",
+            singer: track?.artists.first?.name ?? "",
+            previewUrl: track?.preview_url ?? "",
+            songID: track?.artists.first?.id ?? "")
         }
+        isAudioAvailable(item: song)
     }
     
 

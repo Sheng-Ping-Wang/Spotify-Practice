@@ -33,10 +33,10 @@ struct PlaylistItem: Codable {
     let id: String
     let images: [PlaylistImage]
     let name: String
-    let owner: Owner
+//    let owner: Owner
 //    let primaryColor, itemPublic: JSONNull?
     let snapshotID: String?
-    let tracks: PlaylistTracks
+    let tracks: PlaylistTracks?
     let type: PlaylistItemType
     let uri: String
 
@@ -65,36 +65,36 @@ struct PlaylistImage: Codable {
 }
 
 // MARK: - Owner
-struct Owner: Codable {
-    let displayName: DisplayName?
+//struct Owner: Codable {
+//    let display_name: String?
 //    let externalUrls: ExternalUrls
-    let href: String
-    let id: ID
-    let type: OwnerType
-    let uri: URI
+//    let href: String
+//    let id: ID
+//    let type: OwnerType
+//    let uri: URI
 
 //    enum CodingKeys: String, CodingKey {
 //        case displayName = "display_name"
 //        case externalUrls = "external_urls"
 //        case href, id, type, uri
 //    }
-}
+//}
 
-enum DisplayName: String, Codable {
-    case spotify = "Spotify"
-}
-
-enum ID: String, Codable {
-    case spotify = "spotify"
-}
-
-enum OwnerType: String, Codable {
-    case user = "user"
-}
-
-enum URI: String, Codable {
-    case spotifyUserSpotify = "spotify:user:spotify"
-}
+//enum DisplayName: String, Codable {
+//    case spotify = "Spotify"
+//}
+//
+//enum ID: String, Codable {
+//    case spotify = "spotify"
+//}
+//
+//enum OwnerType: String, Codable {
+//    case user = "user"
+//}
+//
+//enum URI: String, Codable {
+//    case spotifyUserSpotify = "spotify:user:spotify"
+//}
 
 // MARK: - Tracks
 struct PlaylistTracks: Codable {

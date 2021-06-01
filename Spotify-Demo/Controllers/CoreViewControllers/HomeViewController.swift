@@ -134,6 +134,80 @@ class HomeViewController: UIViewController {
             }
         }
     }
+    
+    func getAlbumsDetail(url: String) {
+        APICaller.shared.getNewReleasesDetail(url: url) { (ref) in
+            switch ref {
+            case .success(let test):
+                DispatchQueue.main.async {
+                    let vc = PlayerViewController()
+                    vc.song = PlaySongInfo(
+                    imageUrl: test.images[0].url,
+                    song: test.name,
+                    singer: test.artists[0].name,
+                    previewUrl: test.tracks?.items[0].preview_url ?? "",
+                    songID: test.tracks?.items[0].artists.first?.id)
+                    vc.isPlaylist = false
+                    self.present(vc, animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getHomeCategoryDetail(url: String) {
+        APICaller.shared.getHomeCategoryDetail(url: url) { (result) in
+            switch result {
+            case .success(let category):
+                DispatchQueue.main.async {
+                    let vc = PlayerViewController()
+                    vc.song = PlaySongInfo(imageUrl: category.tracks.items.first?.track.album.images.first?.url ?? "",
+                        song: category.tracks.items.first?.track.name ?? "",
+                        singer: category.tracks.items.first?.track.album.artists.first?.name ?? "",
+                        previewUrl: category.tracks.items.first?.track.preview_url ?? "",
+                        songID: category.tracks.items.first?.track.id)
+                    vc.playlistUrl = category.href + "/tracks"
+                    vc.isPlaylist = true
+                    self.present(vc, animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getRecentlyPlayedDetail(url: String) {
+        APICaller.shared.getRecentlyPlayedDetail(url: url) { (result) in
+            switch result {
+            case .success(let track):
+                DispatchQueue.main.async {
+                    let vc = PlayerViewController()
+                    vc.song = PlaySongInfo(imageUrl: track.album?.images.first?.url ?? "", song: track.name, singer: track.artists.first?.name ?? "", previewUrl: track.preview_url ?? "", songID: track.artists.first?.id)
+//                    vc.playlistUrl = category.href + "/tracks"
+                    vc.isPlaylist = false
+                    self.present(vc, animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getArtistProfile(url: String) {
+        APICaller.shared.getArtistProfile(url: url) { (result) in
+            switch result {
+            case .success(let artist):
+                DispatchQueue.main.async {
+                    let artistProfileVC = ArtistProfileViewController()
+                    artistProfileVC.artistProfile = artist
+                    self.navigationController?.pushViewController(artistProfileVC, animated: true)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 
     
 }
@@ -250,9 +324,20 @@ enum HomeSections: CaseIterable {
 extension HomeViewController: SendIndexPathDelegate {
     func sendIndexPath(href: String) {
         print(href)
-        let playerVC = PlayerViewController()
-        playerVC.playlistUrl = href
-        present(playerVC, animated: true, completion: nil)
+        
+        if href.contains("albums") {
+            getAlbumsDetail(url: href)
+        }else if href.contains("artists") {
+            getArtistProfile(url: href)
+        }else if href.contains("playlists") {
+            getHomeCategoryDetail(url: href)
+        }else{
+            getRecentlyPlayedDetail(url: href)
+        }
+        
+
+        
+        
     }
     
     

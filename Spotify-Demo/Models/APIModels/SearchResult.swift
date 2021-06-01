@@ -17,15 +17,15 @@ struct Tracks: Codable {
     let href: String
     let items: [Item]
     let limit: Int
-    let next: String
-    let offset: Int
+    let next: String?
+    let offset: Int?
     let previous: JSONNull?
-    let total: Int
+    let total: Int?
 }
 
 // MARK: - Item
 struct Item: Codable {
-    var album: Album
+    var album: Album?
     var artists: [Artist]
 //    let availableMarkets: [String]
     let discNumber, durationMS: Int?
@@ -41,7 +41,13 @@ struct Item: Codable {
     let trackNumber: Int?
     let type: ItemType?
     let uri: String?
-
+    
+//    let tracks: Tracks
+    
+//    let images: [PlaylistImage]?
+//    let tracks: PlaylistTracks?
+    
+    
 //    enum CodingKeys: String, CodingKey {
 //        case album, artists
 //        case availableMarkets = "available_markets"

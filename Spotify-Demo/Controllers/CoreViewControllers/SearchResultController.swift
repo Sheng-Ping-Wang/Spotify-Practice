@@ -71,7 +71,7 @@ extension SearchResultController: UITableViewDelegate, UITableViewDataSource {
         guard let result = searchResult?.tracks.items.map({$0}) else { return UITableViewCell() }
         let info = result[indexPath.row]
         
-        if let url = URL(string: info.album.images[0].url) {
+        if let url = URL(string: info.album?.images[0].url ?? "") {
             cell.myImageView.getImages(url: url)
             cell.songLabel.text = info.name
             cell.singerLabel.text = info.artists[0].name
@@ -82,7 +82,13 @@ extension SearchResultController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let playerVC = PlayerViewController()
-        playerVC.song = searchResult?.tracks.items[indexPath.row]
+//        playerVC.song = searchResult?.tracks.items[indexPath.row]
+        let result = searchResult?.tracks.items[indexPath.row]
+        playerVC.song.imageUrl = searchResult?.tracks.items[indexPath.row].album?.images.first?.url ?? ""
+        playerVC.song.song = result?.name ?? ""
+        playerVC.song.singer = result?.artists.first?.name ?? ""
+        playerVC.song.previewUrl = result?.preview_url ?? ""
+        playerVC.song.songID = result?.artists.first?.id ?? ""
         playerVC.isPlaylist = false
         present(playerVC, animated: true, completion: nil)
     }

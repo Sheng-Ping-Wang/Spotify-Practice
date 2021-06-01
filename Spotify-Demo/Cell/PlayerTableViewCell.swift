@@ -49,27 +49,30 @@ class PlayerTableViewCell: UITableViewCell {
     
     lazy var pausePlayBtn: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "pause.circle", withConfiguration: config)
+        let image = UIImage(systemName: "pause.fill", withConfiguration: config)
         button.setImage(image, for: .normal)
-        button.tintColor = .white
+        button.backgroundColor = .systemGreen
+        button.layer.cornerRadius = 30
+        button.clipsToBounds = true
+        button.tintColor = .black
         return button
     }()
     
-    lazy var previousBtn: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "chevron.left", withConfiguration: config)
-        button.setImage(image, for: .normal)
-        button.tintColor = .white
-        return button
-    }()
-    
-    lazy var nextBtn: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "chevron.right", withConfiguration: config)
-        button.setImage(image, for: .normal)
-        button.tintColor = .white
-        return button
-    }()
+//    lazy var previousBtn: UIButton = {
+//        let button = UIButton()
+//        let image = UIImage(systemName: "chevron.left", withConfiguration: config)
+//        button.setImage(image, for: .normal)
+//        button.tintColor = .white
+//        return button
+//    }()
+//
+//    lazy var nextBtn: UIButton = {
+//        let button = UIButton()
+//        let image = UIImage(systemName: "chevron.right", withConfiguration: config)
+//        button.setImage(image, for: .normal)
+//        button.tintColor = .white
+//        return button
+//    }()
     
     //MARK: - Init
     
@@ -104,8 +107,8 @@ class PlayerTableViewCell: UITableViewCell {
         contentView.addSubview(singerLabel)
         contentView.addSubview(slider)
         contentView.addSubview(pausePlayBtn)
-        contentView.addSubview(previousBtn)
-        contentView.addSubview(nextBtn)
+//        contentView.addSubview(previousBtn)
+//        contentView.addSubview(nextBtn)
     }
     
     //MARK: - Set Layouts
@@ -119,7 +122,7 @@ class PlayerTableViewCell: UITableViewCell {
         }
         
         songLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(myImageView.snp.bottom).offset(+10)
+            make.top.equalTo(myImageView.snp.bottom).offset(+50)
             make.left.equalTo(myImageView)
             make.right.equalTo(myImageView)
             make.height.equalTo(30)
@@ -140,22 +143,22 @@ class PlayerTableViewCell: UITableViewCell {
         }
         
         pausePlayBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(slider.snp.bottom).offset(+20)
-            make.centerX.equalTo(self)
-            make.width.height.equalTo(50)
+            make.centerY.equalTo(myImageView.snp.bottom)
+            make.right.equalTo(myImageView)
+            make.width.height.equalTo(60)
         }
         
-        previousBtn.snp.makeConstraints { (make) in
-            make.centerY.equalTo(pausePlayBtn)
-            make.right.equalTo(pausePlayBtn.snp.left).offset(-50)
-            make.width.height.equalTo(50)
-        }
-        
-        nextBtn.snp.makeConstraints { (make) in
-            make.centerY.equalTo(pausePlayBtn)
-            make.left.equalTo(pausePlayBtn.snp.right).offset(+50)
-            make.width.height.equalTo(50)
-        }
+//        previousBtn.snp.makeConstraints { (make) in
+//            make.centerY.equalTo(pausePlayBtn)
+//            make.right.equalTo(pausePlayBtn.snp.left).offset(-50)
+//            make.width.height.equalTo(50)
+//        }
+//
+//        nextBtn.snp.makeConstraints { (make) in
+//            make.centerY.equalTo(pausePlayBtn)
+//            make.left.equalTo(pausePlayBtn.snp.right).offset(+50)
+//            make.width.height.equalTo(50)
+//        }
         
         
     }

@@ -17,7 +17,7 @@ class SearchView: UIView {
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: fullSize.width/2 - 20, height: 150)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        layout.minimumLineSpacing = 15
+//        layout.minimumLineSpacing = 15
         layout.headerReferenceSize = CGSize(width: fullSize.width, height: 60)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
