@@ -37,7 +37,6 @@ class LibraryViewController: UIViewController {
             switch result {
             case .success(let list):
                 self.userPlaylist = list
-//                print(list.items[0].tracks?.href)
             case .failure(let error):
                 print(error)
             }
@@ -45,6 +44,8 @@ class LibraryViewController: UIViewController {
     }
     
 }
+
+//MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -56,7 +57,7 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: LibraryTableViewCell.identifier, for: indexPath) as? LibraryTableViewCell else { return UITableViewCell()}
         
         let playlist = userPlaylist?.items?[indexPath.row]
-        if let url = URL(string: playlist?.images?[0].url ?? "") {
+        if let url = URL(string: playlist?.images?.first?.url ?? "") {
             cell.myImageView.getImages(url: url)
             cell.playListNameLabel.text = playlist?.name
         }
@@ -67,7 +68,6 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let playerVC = PlayerViewController()
         playerVC.playlistUrl = userPlaylist?.items?[indexPath.row].tracks?.href
-//        print("hhhhh\(userPlaylist?.items?[indexPath.row].tracks?.href)")
         playerVC.isPlaylist = true
         present(playerVC, animated: true, completion: nil)
     }

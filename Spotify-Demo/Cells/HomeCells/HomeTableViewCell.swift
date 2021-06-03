@@ -18,9 +18,9 @@ class HomeTableViewCell: UITableViewCell {
     static let identifier = "homeTableViewCell"
     let homeView = HomeView()
     var isCircle: Bool = false
+    var delegate: SendIndexPathDelegate?
     var getPictures: [String] = []  {
         didSet{
-//            print(relatedArtists)
             DispatchQueue.main.async {
                 self.myCollectionview.reloadData()
             }
@@ -28,54 +28,11 @@ class HomeTableViewCell: UITableViewCell {
     }
     var imageUrlAndhref: ImageUrlAndhref? {
         didSet{
-//            print(test)
             DispatchQueue.main.async {
                 self.myCollectionview.reloadData()
             }
         }
     }
-    
-//    var musicCategory: RankPlaylist? {
-//        didSet{
-//            if let categories = self.musicCategory?.playlists.items.map({$0.images[0].url}) {
-//                getPictures = categories
-//            }
-//        }
-//    }
-
-//    var relatedArtists: ArtistsList? {
-//        didSet{
-//            if let playlist = self.relatedArtists?.artists.map({$0.images[0].url}){
-//                getPictures = playlist
-//            }
-//        }
-//    }
-//    
-//    var newReleases: NewReleases? {
-//        didSet{
-//            if let newReleases = self.newReleases?.albums.items.map({$0.images[0].url}) {
-//                getPictures = newReleases
-//            }
-//        }
-//    }
-//    
-//    var recentlyPlayed: RecentlyPlayed? {
-//        didSet{
-//            if let recentlyPlayed = self.recentlyPlayed?.items?.map({$0.track.album.images[0].url}) {
-//                getPictures = recentlyPlayed
-//            }
-//        }
-//    }
-//    
-//    var currentlyFollowing: CurrentlyFollowing? {
-//        didSet{
-//            if let currentlyFollowing = self.currentlyFollowing?.artists.items.map({$0.images[0].url}) {
-//                getPictures = currentlyFollowing
-//            }
-//        }
-//    }
-    
-    var delegate: SendIndexPathDelegate?
     
     //MARK: - IBOutlets
     
@@ -110,7 +67,6 @@ class HomeTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
     }
     
     //MARK: - Set Subviews
@@ -118,7 +74,6 @@ class HomeTableViewCell: UITableViewCell {
     func setSubviews() {
         contentView.addSubview(myCollectionview)
     }
-    
     
     //MARK: - Set Layouts
     
@@ -130,13 +85,13 @@ class HomeTableViewCell: UITableViewCell {
 
 }
 
+//MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return imageUrlAndhref?.imageUrl.count ?? 0
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -153,6 +108,5 @@ extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.sendIndexPath(href: imageUrlAndhref?.href[indexPath.row] ?? "")
     }
-    
     
 }

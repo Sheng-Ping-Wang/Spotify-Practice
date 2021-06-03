@@ -17,7 +17,6 @@ class PlayerPlaylistTableViewCell: UITableViewCell {
     
     let myImageView: GetImageView = {
         let iv = GetImageView()
-//        iv.backgroundColor = .clear
         iv.layer.cornerRadius = 10
         iv.clipsToBounds = true
         return iv

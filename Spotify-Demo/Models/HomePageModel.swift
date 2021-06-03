@@ -21,9 +21,3 @@ struct ImageUrlAndhref {
     var imageUrl: [String]
     var href: [String]
 }
-
-struct Test: Codable {
-    let artists: [Artist]
-    let images: [Image]
-    let tracks: Tracks
-}

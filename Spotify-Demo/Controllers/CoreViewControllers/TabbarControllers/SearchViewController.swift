@@ -33,7 +33,6 @@ class SearchViewController: UIViewController {
     //MARK: - Functions
     
     @objc func search() {
-        
         let vc = SearchResultController()
         present(vc, animated: true, completion: nil)
     }
@@ -51,6 +50,8 @@ class SearchViewController: UIViewController {
 
 }
 
+//MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return brouseCatrgories?.categories.items.count ?? 0
@@ -61,7 +62,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         guard let categories = brouseCatrgories?.categories.items.map({$0}) else { return UICollectionViewCell() }
         
-        if let url = URL(string: categories[indexPath.row].icons[0].url) {
+        if let url = URL(string: categories[indexPath.row].icons.first?.url ?? "") {
             cell.myImageView.getImages(url: url)
             cell.myLabel.text = categories[indexPath.row].name
         }

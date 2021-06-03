@@ -28,7 +28,6 @@ class SearchResultView: UIView {
             tf.rightViewMode = .always
             tf.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
             tf.leftViewMode = .always
-            
             return tf
         }()
     

@@ -32,8 +32,6 @@ class SearchCollectionReusableHeader: UICollectionReusableView {
         return button
     }()
     
-
-    
     //MARK: - Init
     
     public func configure() {

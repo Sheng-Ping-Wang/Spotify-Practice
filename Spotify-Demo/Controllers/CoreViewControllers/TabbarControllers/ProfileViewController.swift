@@ -20,7 +20,6 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view = profileView
         getProfile()
-        
     }
     
     //MARK: - Functions
@@ -40,7 +39,7 @@ class ProfileViewController: UIViewController {
     }
     
     func setProfile() {
-        guard let url = URL(string: userProfile?.images[0].url ?? "") else { return }
+        guard let url = URL(string: userProfile?.images.first?.url ?? "") else { return }
         if let userProfile = userProfile {
             profileView.profileImageView.getImages(url: url)
             profileView.followersNumberLabel.text = "\(userProfile.followers.total)"

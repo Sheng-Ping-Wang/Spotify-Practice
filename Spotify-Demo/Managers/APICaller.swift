@@ -89,8 +89,8 @@ class APICaller {
                 }
                 do{
                     let decoder = JSONDecoder()
-                    let test = try decoder.decode(Brouse.self, from: data)
-                    completion(.success(test))
+                    let category = try decoder.decode(Brouse.self, from: data)
+                    completion(.success(category))
                 }catch{
                     completion(.failure(error))
                 }
@@ -110,7 +110,6 @@ class APICaller {
                 do{
                     let decoder = JSONDecoder()
                     let songs = try decoder.decode(RankPlaylist.self, from: data)
-//                    print(test)
                     completion(.success(songs))
                 }catch{
                     print(error)

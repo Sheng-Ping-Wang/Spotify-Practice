@@ -13,18 +13,28 @@ class WelcomeViewController: UIViewController {
     let signInBtn: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .white
+        btn.layer.cornerRadius = 10
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor = UIColor.gray.cgColor
         btn.setTitle("Sign In With Spotify", for: .normal)
-        btn.setTitleColor(.blue, for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.backgroundColor = .black
         btn.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
         return btn
     }()
     
+    let myImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "Spotify")
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGreen
+        view.insertSubview(myImageView, at: 0)
         view.addSubview(signInBtn)
         setLayouts()
-        
     }
     
     @objc func didTapSignIn() {
@@ -54,11 +64,15 @@ class WelcomeViewController: UIViewController {
     func setLayouts() {
         signInBtn.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(view.snp.centerY).offset(80)
-            make.width.equalTo(200)
+            make.bottom.equalTo(view.snp.bottom).offset(-50)
+            make.width.equalTo(view.snp.width).multipliedBy(0.8)
             make.height.equalTo(50)
         }
+        
+        myImageView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
+        }
+        
     }
-    
 
 }

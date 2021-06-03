@@ -22,7 +22,6 @@ class ArtistProfileView: UIView {
         cv.register(ArtistProfileCell.self, forCellWithReuseIdentifier: ArtistProfileCell.identifier)
         cv.register(RelatedArtistCell.self, forCellWithReuseIdentifier: RelatedArtistCell.identifier)
         cv.register(ArtistProfileReusableViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ArtistProfileReusableViewHeader.identifier)
-        
         return cv
     }()
     

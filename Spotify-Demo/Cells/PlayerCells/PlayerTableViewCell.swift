@@ -42,6 +42,8 @@ class PlayerTableViewCell: UITableViewCell {
         slider.minimumValue = 0
         slider.maximumValue = 1
         slider.value = 0.5
+        slider.minimumTrackTintColor = .white
+        slider.thumbTintColor = .systemGreen
         return slider
     }()
     
@@ -57,22 +59,6 @@ class PlayerTableViewCell: UITableViewCell {
         button.tintColor = .black
         return button
     }()
-    
-//    lazy var previousBtn: UIButton = {
-//        let button = UIButton()
-//        let image = UIImage(systemName: "chevron.left", withConfiguration: config)
-//        button.setImage(image, for: .normal)
-//        button.tintColor = .white
-//        return button
-//    }()
-//
-//    lazy var nextBtn: UIButton = {
-//        let button = UIButton()
-//        let image = UIImage(systemName: "chevron.right", withConfiguration: config)
-//        button.setImage(image, for: .normal)
-//        button.tintColor = .white
-//        return button
-//    }()
     
     //MARK: - Init
     
@@ -98,7 +84,6 @@ class PlayerTableViewCell: UITableViewCell {
         sliderDidTouch?()
     }
     
-    
     //MARK: - Set Subviews
     
     func setSubvies() {
@@ -107,8 +92,6 @@ class PlayerTableViewCell: UITableViewCell {
         contentView.addSubview(singerLabel)
         contentView.addSubview(slider)
         contentView.addSubview(pausePlayBtn)
-//        contentView.addSubview(previousBtn)
-//        contentView.addSubview(nextBtn)
     }
     
     //MARK: - Set Layouts
@@ -146,21 +129,7 @@ class PlayerTableViewCell: UITableViewCell {
             make.centerY.equalTo(myImageView.snp.bottom)
             make.right.equalTo(myImageView)
             make.width.height.equalTo(60)
-        }
-        
-//        previousBtn.snp.makeConstraints { (make) in
-//            make.centerY.equalTo(pausePlayBtn)
-//            make.right.equalTo(pausePlayBtn.snp.left).offset(-50)
-//            make.width.height.equalTo(50)
-//        }
-//
-//        nextBtn.snp.makeConstraints { (make) in
-//            make.centerY.equalTo(pausePlayBtn)
-//            make.left.equalTo(pausePlayBtn.snp.right).offset(+50)
-//            make.width.height.equalTo(50)
-//        }
-        
-        
+        }        
     }
 
 }

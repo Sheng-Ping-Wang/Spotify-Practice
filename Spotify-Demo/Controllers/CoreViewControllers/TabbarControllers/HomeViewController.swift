@@ -17,6 +17,22 @@ class HomeViewController: UIViewController {
     
     var homeSections: [HomeSections] = [.newReleases, .followSingers, .catrgories, .artists, .recentlyPlayed]
     
+    var newReleases: NewReleases? {
+        didSet{
+            DispatchQueue.main.async {
+                self.homeView.homeTableView.reloadData()
+            }
+        }
+    }
+    
+    var currentlyFollowing: CurrentlyFollowing? {
+        didSet{
+            DispatchQueue.main.async {
+                self.homeView.homeTableView.reloadData()
+            }
+        }
+    }
+    
     var musicCategory: RankPlaylist? {
         didSet{
             DispatchQueue.main.async {
@@ -33,14 +49,6 @@ class HomeViewController: UIViewController {
         }
     }
     
-    var newReleases: NewReleases? {
-        didSet{
-            DispatchQueue.main.async {
-                self.homeView.homeTableView.reloadData()
-            }
-        }
-    }
-    
     var recentlyPlayed: RecentlyPlayed? {
         didSet{
             DispatchQueue.main.async {
@@ -49,15 +57,6 @@ class HomeViewController: UIViewController {
         }
     }
     
-    var currentlyFollowing: CurrentlyFollowing? {
-        didSet{
-            DispatchQueue.main.async {
-                self.homeView.homeTableView.reloadData()
-            }
-        }
-    }
-    
-    var myIndexPath: Int?
     
     
     //MARK: - Life Cycle
@@ -135,18 +134,18 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func getAlbumsDetail(url: String) {
+    func getNewReleasesDetail(url: String) {
         APICaller.shared.getNewReleasesDetail(url: url) { (ref) in
             switch ref {
-            case .success(let test):
+            case .success(let releases):
                 DispatchQueue.main.async {
                     let vc = PlayerViewController()
                     vc.song = PlaySongInfo(
-                    imageUrl: test.images[0].url,
-                    song: test.name,
-                    singer: test.artists[0].name,
-                    previewUrl: test.tracks?.items[0].preview_url ?? "",
-                    songID: test.tracks?.items[0].artists.first?.id)
+                    imageUrl: releases.images[0].url,
+                    song: releases.name,
+                    singer: releases.artists[0].name,
+                    previewUrl: releases.tracks?.items[0].preview_url ?? "",
+                    songID: releases.tracks?.items[0].artists.first?.id)
                     vc.isPlaylist = false
                     self.present(vc, animated: true, completion: nil)
                 }
@@ -184,7 +183,6 @@ class HomeViewController: UIViewController {
                 DispatchQueue.main.async {
                     let vc = PlayerViewController()
                     vc.song = PlaySongInfo(imageUrl: track.album?.images.first?.url ?? "", song: track.name, singer: track.artists.first?.name ?? "", previewUrl: track.preview_url ?? "", songID: track.artists.first?.id)
-//                    vc.playlistUrl = category.href + "/tracks"
                     vc.isPlaylist = false
                     self.present(vc, animated: true, completion: nil)
                 }
@@ -212,6 +210,8 @@ class HomeViewController: UIViewController {
     
 }
 
+//MARK: - UITableViewDelegate, UITableViewDataSource
+
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -232,9 +232,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 imageUrlAndhref.imageUrl = newReleases
                 imageUrlAndhref.href = newReleasesHref
                 cell.imageUrlAndhref = self.imageUrlAndhref
-//            cell.getPictures = newReleases
             }
-//            cell.newReleases = self.newReleases
             return cell
         
         case .followSingers:
@@ -242,10 +240,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 imageUrlAndhref.imageUrl = currentlyFollowing
                 imageUrlAndhref.href = currentlyFollowingHref
                 cell.imageUrlAndhref = self.imageUrlAndhref
-//                cell.getPictures = currentlyFollowing
                 cell.isCircle = true
             }
-//            cell.currentlyFollowing = self.currentlyFollowing
             return cell
             
         case .catrgories:
@@ -253,9 +249,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 imageUrlAndhref.imageUrl = categories
                 imageUrlAndhref.href = categoriesHref
                 cell.imageUrlAndhref = self.imageUrlAndhref
-//            cell.getPictures = categories
             }
-//            cell.musicCategory = self.musicCategory
             return cell
             
         case .artists:
@@ -263,9 +257,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 imageUrlAndhref.imageUrl = playlist
                 imageUrlAndhref.href = playlistHref
                 cell.imageUrlAndhref = self.imageUrlAndhref
-//                cell.getPictures = playlist
             }
-//            cell.relatedArtists = self.relatedArtists
             return cell
             
         case .recentlyPlayed:
@@ -273,9 +265,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 imageUrlAndhref.imageUrl = recentlyPlayed
                 imageUrlAndhref.href = recentlyPlayedHref
                 cell.imageUrlAndhref = self.imageUrlAndhref
-//                cell.getPictures = recentlyPlayed
             }
-//            cell .recentlyPlayed = self.recentlyPlayed
             return cell
         }
         
@@ -295,7 +285,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        50
+        return 50
     }
     
 }
@@ -320,13 +310,12 @@ enum HomeSections: CaseIterable {
     }
 }
 
-
+//點擊首頁圖片後傳送資料到下一頁及跳頁
 extension HomeViewController: SendIndexPathDelegate {
     func sendIndexPath(href: String) {
-        print(href)
         
         if href.contains("albums") {
-            getAlbumsDetail(url: href)
+            getNewReleasesDetail(url: href)
         }else if href.contains("artists") {
             getArtistProfile(url: href)
         }else if href.contains("playlists") {
@@ -334,12 +323,7 @@ extension HomeViewController: SendIndexPathDelegate {
         }else{
             getRecentlyPlayedDetail(url: href)
         }
-        
-
-        
-        
     }
-    
     
 }
 

@@ -61,7 +61,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(30)
             make.bottom.equalTo(myImageView).offset(-8)
         }
-        
     }
     
 }

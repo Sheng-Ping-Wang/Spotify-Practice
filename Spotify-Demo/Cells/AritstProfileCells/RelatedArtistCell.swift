@@ -17,6 +17,8 @@ class RelatedArtistCell: UICollectionViewCell {
     
     var myImageView: GetImageView = {
         let iv = GetImageView()
+        iv.layer.cornerRadius = 20
+        iv.clipsToBounds = true
         return iv
     }()
     

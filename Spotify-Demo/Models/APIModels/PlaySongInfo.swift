@@ -8,7 +8,6 @@
 import Foundation
 
 struct PlaySongInfo {
-    
     var imageUrl: String = ""
     var song: String = ""
     var singer: String = ""

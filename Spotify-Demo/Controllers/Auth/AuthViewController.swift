@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 
 class AuthViewController: UIViewController, WKNavigationDelegate {
-
+    
     var completionHandler: ((Bool) -> Void)?
     
     let webView: WKWebView = {

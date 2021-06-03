@@ -15,10 +15,10 @@ class PlayerViewController: UIViewController {
     var playerView = PlayerView()
     var mySection: [PlayerSection] = [.player, .playlist]
     var player: AVPlayer?
-    var song = PlaySongInfo() {
+    var song: PlaySongInfo? = PlaySongInfo() {
         didSet{
             getArtistTopTracks()
-            playSong(url: song.previewUrl)
+            playSong()
         }
     }
     var topTracks: ArtistTopTracks? {
@@ -48,7 +48,6 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -76,27 +75,22 @@ class PlayerViewController: UIViewController {
 
     //顯示在UI上的資料
     func getSongInfo(imageView: GetImageView, songLabel: UILabel, artistLabel: UILabel) {
-//        guard let url = URL(string: song?.album?.images.first?.url ?? "") else { return }
-//            imageView.getImages(url: url)
-//            songLabel.text = song?.name
-//        artistLabel.text = song?.artists.first?.name
-        guard let url = URL(string: song.imageUrl) else { return }
+        guard let url = URL(string: song?.imageUrl ?? "") else { return }
             imageView.getImages(url: url)
-        songLabel.text = song.song
-        artistLabel.text = song.singer
+        songLabel.text = song?.song
+        artistLabel.text = song?.singer
             
     }
 
-    func playSong(url: String) {
-        
-        guard let url = URL(string: url) else { return }
+    func playSong() {
+        guard let url = URL(string: song?.previewUrl ?? "") else { return }
         player = AVPlayer(url: url)
         player?.volume = 0.5
         player?.play()
     }
     
     func getArtistTopTracks() {
-        APICaller.shared.getArtistTopTracks(id: song.songID ?? "") { (result) in
+        APICaller.shared.getArtistTopTracks(id: song?.songID ?? "") { (result) in
             switch result {
             case .success(let tracks):
                 self.topTracks = tracks
@@ -124,35 +118,23 @@ class PlayerViewController: UIViewController {
         }
     }
     
-//    func getTest() {
-//        APICaller.shared.getTest(url: playlistUrl ?? "") { (result) in
-//            switch result {
-//            case .success(let test):
-//
-//            }
-//        }
-//    }
-    
-    func isAudioAvailable(item: PlaySongInfo) {
-        if item.previewUrl == "" {
+    func isAudioAvailable() {
+        if song?.previewUrl == "" {
             let alert = UIAlertController(title: "Oops", message: "The audition is not available.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            song.imageUrl = ""
-            song.singer = ""
-            song.song = ""
+            song = nil
             player?.pause()
             isPlaying = false
             present(alert, animated: true, completion: nil)
         }else{
-            self.song = item
             isPlaying = true
         }
     }
-
 }
 
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
+
 extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -248,13 +230,18 @@ extension PlayerViewController: UITableViewDelegate, UITableViewDataSource {
             previewUrl: track?.preview_url ?? "",
             songID: track?.artists.first?.id ?? "")
         }
-        isAudioAvailable(item: song)
+        isAudioAvailable()
     }
     
-
-    
-    
-    
+    //Make first section not selectable
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        switch mySection[indexPath.section] {
+        case .player:
+            return nil
+        case .playlist:
+            return indexPath
+        }
+    }
 }
 
 enum PlayerSection {

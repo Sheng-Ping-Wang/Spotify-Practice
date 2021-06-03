@@ -8,6 +8,7 @@
 import UIKit
 
 class ArtistProfileReusableViewHeader: UICollectionReusableView {
+    
     //MARK: - Properties
     
     static let identifier = "artistProfileReusableViewHeader"
