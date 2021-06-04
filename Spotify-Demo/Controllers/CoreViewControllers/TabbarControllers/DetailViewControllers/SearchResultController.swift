@@ -27,6 +27,7 @@ class SearchResultController: UIViewController {
         view = searchResultView
         searchResultView.resultTableView.delegate = self
         searchResultView.resultTableView.dataSource = self
+        searchResultView.searchTextField.delegate = self
         searchResultView.searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
     }
     
@@ -98,5 +99,23 @@ extension SearchResultController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    
+    
+    //滑動時收鍵盤
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchResultView.searchTextField.resignFirstResponder()
+    }
+    
+}
+
+//按下Enter收鍵盤並開始搜尋
+extension SearchResultController: UITextFieldDelegate {
+        
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        search()
+        return true
+    }
+    
     
 }

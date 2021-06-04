@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol SendIndexPathDelegate {
+protocol SendIndexPathDelegate: AnyObject {
     func sendIndexPath(href: String)
 }
 
@@ -18,7 +18,7 @@ class HomeTableViewCell: UITableViewCell {
     static let identifier = "homeTableViewCell"
     let homeView = HomeView()
     var isCircle: Bool = false
-    var delegate: SendIndexPathDelegate?
+    weak var delegate: SendIndexPathDelegate?
     var getPictures: [String] = []  {
         didSet{
             DispatchQueue.main.async {

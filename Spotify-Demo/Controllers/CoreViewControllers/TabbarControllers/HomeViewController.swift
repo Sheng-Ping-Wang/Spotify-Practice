@@ -161,17 +161,17 @@ class HomeViewController: UIViewController {
             case .success(let category):
                 DispatchQueue.main.async {
                     let vc = PlayerViewController()
-                    vc.song = PlaySongInfo(imageUrl: category.tracks.items.first?.track.album.images.first?.url ?? "",
-                        song: category.tracks.items.first?.track.name ?? "",
-                        singer: category.tracks.items.first?.track.album.artists.first?.name ?? "",
-                        previewUrl: category.tracks.items.first?.track.preview_url ?? "",
-                        songID: category.tracks.items.first?.track.id)
+                    vc.song = PlaySongInfo(imageUrl: category.tracks.items.first?.track?.album.images.first?.url ?? "",
+                        song: category.tracks.items.first?.track?.name ?? "",
+                        singer: category.tracks.items.first?.track?.album.artists.first?.name ?? "",
+                        previewUrl: category.tracks.items.first?.track?.preview_url ?? "",
+                        songID: category.tracks.items.first?.track?.id)
                     vc.playlistUrl = category.href + "/tracks"
                     vc.isPlaylist = true
                     self.present(vc, animated: true, completion: nil)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error)
             }
         }
     }
