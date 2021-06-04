@@ -8,4 +8,6 @@ Welcome to clone the project, but remember to get your Client ID, Client Secret 
 
 Enjoy!
 
-![image](https://github.com/Sheng-Ping-Wang/Spotify-Practice/blob/main/SpotifyDemo.gif)
+![image](https://github.com/Sheng-Ping-Wang/Spotify-Practice/blob/main/SpotifyDemo.gif).  
+
+Demo on Youtube: https://www.youtube.com/watch?v=w7eQfmmS2OM&t=14s
